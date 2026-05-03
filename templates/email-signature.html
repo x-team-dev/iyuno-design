@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link rel="stylesheet" href="../colors_and_type.css"/>
 <style>
-  html, body { margin: 0; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
+  .tpl-backbar{position:fixed;top:0;left:0;right:0;z-index:100;background:color-mix(in oklab,var(--ink-950) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink-800);padding:10px 24px;display:flex;align-items:center;gap:16px;font-family:var(--font-body)}.tpl-backbar a{color:var(--ink-200);text-decoration:none;font-size:13px;font-weight:500;transition:color 140ms}.tpl-backbar a:hover{color:#fff}.tpl-backbar .sep{color:var(--ink-600);font-size:11px}.tpl-backbar .current{color:var(--ink-400);font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase}
+  html, body { margin: 0; padding-top: 44px; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
   .stage { padding: 64px 32px; max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
 
   .lede h1 {
@@ -116,6 +117,7 @@
 </style>
 </head>
 <body>
+<nav class="tpl-backbar"><a href="../reference_kit/index.html">← Reference Kit</a><span class="sep">·</span><a href="../reference_kit/tokens.html">Tokens</a><span class="sep">·</span><a href="../reference_kit/components.html">Components</a><span class="sep">·</span><a href="../reference_kit/brand.html">Brand</a><span class="sep">·</span><span class="current">Email</span></nav>
 <div class="stage">
 
   <div class="lede">
@@ -137,7 +139,7 @@
           <tr>
             <td valign="top" style="padding-right:20px;border-right:1px solid #E7E4DD;">
               <a href="https://iyuno.com" style="text-decoration:none;display:inline-block;">
-                <img src="https://iyuno.com/email/iyuno-logo.png" alt="Iyuno" height="20" style="display:block;border:0;outline:none;height:20px;"/>
+                <img src="https://x-team-dev.github.io/iyuno-design/assets/iyuno-logo.svg" alt="Iyuno" height="20" style="display:block;border:0;outline:none;height:20px;"/>
               </a>
             </td>
             <td valign="top" style="padding-left:20px;">
@@ -159,7 +161,7 @@
   <span class="tg">&lt;tr&gt;</span>
     <span class="tg">&lt;td</span> <span class="at">valign</span>=<span class="vl">"top"</span> <span class="at">style</span>=<span class="vl">"padding-right:20px;border-right:1px solid #E7E4DD;"</span><span class="tg">&gt;</span>
       <span class="tg">&lt;a</span> <span class="at">href</span>=<span class="vl">"https://iyuno.com"</span> <span class="at">style</span>=<span class="vl">"text-decoration:none;"</span><span class="tg">&gt;</span>
-        <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="vl">"https://iyuno.com/email/iyuno-logo.png"</span> <span class="at">alt</span>=<span class="vl">"Iyuno"</span>
+        <span class="tg">&lt;img</span> <span class="at">src</span>=<span class="vl">"https://x-team-dev.github.io/iyuno-design/assets/iyuno-logo.svg"</span> <span class="at">alt</span>=<span class="vl">"Iyuno"</span>
              <span class="at">height</span>=<span class="vl">"20"</span> <span class="at">style</span>=<span class="vl">"display:block;border:0;height:20px;"</span><span class="tg">/&gt;</span>
       <span class="tg">&lt;/a&gt;</span>
     <span class="tg">&lt;/td&gt;</span>
@@ -224,7 +226,7 @@
         <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:Arial,Helvetica,sans-serif;color:#1F1D19;font-size:13px;line-height:1.5;">
           <tr>
             <td valign="top" style="padding-right:20px;border-right:1px solid #E7E4DD;">
-              <img src="https://iyuno.com/email/iyuno-logo.png" alt="Iyuno" height="20" style="display:block;border:0;height:20px;"/>
+              <img src="https://x-team-dev.github.io/iyuno-design/assets/iyuno-logo.svg" alt="Iyuno" height="20" style="display:block;border:0;height:20px;"/>
             </td>
             <td valign="top" style="padding-left:20px;">
               <div style="font-size:14px;font-weight:bold;color:#1F1D19;line-height:1.2;">Hana Park</div>
@@ -276,7 +278,7 @@
       <ul>
         <li>File → Options → Mail → Signatures (desktop), or Settings → Mail → Compose &amp; reply (web).</li>
         <li>Paste the rendered preview. Outlook will keep table structure intact.</li>
-        <li>Logo image must be hosted at <code>iyuno.com/email/iyuno-logo.png</code> — never inline.</li>
+        <li>Logo image is hosted at <code>x-team-dev.github.io/iyuno-design/assets/iyuno-logo.svg</code> — never inline.</li>
       </ul>
     </div>
     <div>

@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link rel="stylesheet" href="../colors_and_type.css"/>
 <style>
-  html, body { margin: 0; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
+  .tpl-backbar{position:fixed;top:0;left:0;right:0;z-index:100;background:color-mix(in oklab,var(--ink-950) 94%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink-800);padding:10px 24px;display:flex;align-items:center;gap:16px;font-family:var(--font-body)}.tpl-backbar a{color:var(--ink-200);text-decoration:none;font-size:13px;font-weight:500;transition:color 140ms}.tpl-backbar a:hover{color:#fff}.tpl-backbar .sep{color:var(--ink-600);font-size:11px}.tpl-backbar .current{color:var(--ink-400);font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase}
+  html, body { margin: 0; padding-top: 44px; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
   .stack { padding: 48px 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
 
   /* US Letter at 96dpi */
@@ -343,6 +344,7 @@
 </style>
 </head>
 <body>
+<nav class="tpl-backbar"><a href="../reference_kit/index.html">← Reference Kit</a><span class="sep">·</span><a href="../reference_kit/tokens.html">Tokens</a><span class="sep">·</span><a href="../reference_kit/components.html">Components</a><span class="sep">·</span><a href="../reference_kit/brand.html">Brand</a><span class="sep">·</span><span class="current">Report</span></nav>
 <div class="stack">
 
   <!-- ───────────── COVER ───────────── -->
