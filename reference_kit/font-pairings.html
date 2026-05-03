@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Iyuno · Font Pairings</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet"/>
+<style>
+  html, body { margin: 0; background: var(--ink-100); color: var(--fg); font-family: var(--font-body); }
+  .stage { padding: 56px 32px; max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+  .lede h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 36px; letter-spacing: -0.02em; margin: 0 0 10px;
+  }
+  .lede p { font-size: 14px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 64ch; }
+
+  .logo-anchor {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 28px 32px;
+    display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;
+  }
+  .logo-anchor img { height: 56px; }
+  .logo-anchor .traits {
+    font-family: var(--font-mono); font-size: 11px; line-height: 1.7;
+    color: var(--fg-2); letter-spacing: 0.02em;
+  }
+  .logo-anchor .traits b { color: var(--accent); font-weight: 600; }
+
+  .card {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 16px 24px; background: var(--ink-50);
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: baseline;
+  }
+  .card-head h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 18px; letter-spacing: -0.01em; margin: 0;
+  }
+  .card-head .role {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent); font-weight: 600;
+  }
+  .card-head .lic {
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+    letter-spacing: 0.04em;
+  }
+  .card-body { padding: 28px 32px; }
+
+  .specimen-h {
+    font-weight: 700; font-size: 64px; line-height: 1.0;
+    letter-spacing: -0.025em; margin: 0 0 6px;
+    color: var(--fg);
+  }
+  .specimen-h em { font-style: normal; color: var(--accent); }
+  .specimen-h.serif em { font-style: italic; }
+  .specimen-sub {
+    font-size: 14px; color: var(--fg-2); line-height: 1.55;
+    margin: 0 0 18px; max-width: 56ch;
+  }
+  .specimen-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+    padding-top: 16px; border-top: 1px dashed var(--border);
+  }
+  .glyph-row {
+    font-size: 32px; line-height: 1; letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .glyph-row .lab {
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase;
+    display: block; margin-bottom: 6px;
+  }
+  .why {
+    margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .why h4 {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px;
+    font-weight: 600;
+  }
+  .why h4.pro { color: oklch(0.55 0.13 145); }
+  .why h4.con { color: oklch(0.55 0.18 25); }
+  .why ul { margin: 0; padding-left: 16px; }
+  .why li { font-size: 12px; line-height: 1.55; color: var(--fg); margin-bottom: 4px; }
+
+  /* Per-card font assignments */
+  .switzer .specimen-h, .switzer .glyph-row { font-family: 'Switzer', system-ui, sans-serif; }
+  .general .specimen-h, .general .glyph-row { font-family: 'General Sans', system-ui, sans-serif; }
+  .manrope .specimen-h, .manrope .glyph-row { font-family: 'Manrope', system-ui, sans-serif; }
+  .jakarta .specimen-h, .jakarta .glyph-row { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  .instrument .specimen-h, .instrument .glyph-row { font-family: 'Instrument Serif', Georgia, serif; }
+  .fraunces .specimen-h, .fraunces .glyph-row { font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100; }
+
+  .verdict {
+    background: var(--ink-950); color: var(--ink-50);
+    --fg: var(--ink-50); --fg-2: var(--ink-200); --fg-3: var(--ink-400);
+    border-radius: var(--r-md); padding: 32px 36px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .verdict h3 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 24px; letter-spacing: -0.015em; margin: 0 0 8px;
+    color: var(--ink-50);
+  }
+  .verdict h3 em { font-style: normal; color: var(--accent); }
+  .verdict p { font-size: 13px; line-height: 1.6; color: var(--ink-200); margin: 0 0 10px; }
+  .verdict .stack {
+    border: 1px solid oklch(1 0 0 / 0.15); border-radius: 8px;
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .stack-row {
+    display: grid; grid-template-columns: 80px 1fr;
+    align-items: baseline; gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed oklch(1 0 0 / 0.1);
+  }
+  .stack-row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .stack-row .role {
+    font-family: var(--font-mono); font-size: 9px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
+  }
+  .stack-row .name {
+    font-family: var(--font-display); font-size: 18px;
+    font-weight: 600; letter-spacing: -0.01em; color: var(--ink-50);
+  }
+  .stack-row .name small {
+    display: block; font-family: var(--font-body); font-size: 11px;
+    color: var(--ink-300); font-weight: 400; margin-top: 2px;
+    letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="lede">
+    <h1>Pairing fonts to the wordmark.</h1>
+    <p>The Iyuno logo is a <strong>rounded geometric humanist sans</strong> — even stroke weight, generous open counters, slightly softened terminals, and a distinctively horizontal dot tittle. Below: four candidates that share its DNA, plus two editorial serifs that complement the brand's literary voice.</p>
+  </div>
+
+  <div class="logo-anchor">
+    <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+    <div class="traits">
+      <b>STROKE</b> &nbsp; even, low-contrast (monoline-ish)<br/>
+      <b>TERMINALS</b> &nbsp; rounded but not soft — slightly cut<br/>
+      <b>APERTURE</b> &nbsp; open (humanist, not strict geometric)<br/>
+      <b>BOWLS</b> &nbsp; wide, generous, optimistic<br/>
+      <b>TITTLE</b> &nbsp; horizontal ellipse — wider than tall<br/>
+      <b>Y DESCENDER</b> &nbsp; curved, swooping, flat-cut tail
+    </div>
+  </div>
+
+  <!-- 1. SWITZER -->
+  <article class="card switzer">
+    <div class="card-head">
+      <h2>Switzer</h2>
+      <span class="role">★ Best display match · sans</span>
+      <span class="lic">Free · Indian Type Foundry · Fontshare</span>
+    </div>
+    <div class="card-body">
+      <h3 class="specimen-h">Creativity travels.<br/><em>Meaning stays.</em></h3>
+      <p class="specimen-sub">Geometric grotesque with humanist warmth. Closest DNA to the iyuno wordmark — same generous bowls, same low-contrast strokes, same slightly-rounded terminals.</p>
+      <div class="specimen-grid">
+        <div class="glyph-row"><span class="lab">The wordmark, retraced</span>iyuno</div>
+        <div class="glyph-row"><span class="lab">Numerals & punctuation</span>0123 — Aa·Yy</div>
+      </div>
+      <div class="why">
+        <div><h4 class="pro">Why it works</h4><ul>
+          <li>Stroke contrast and aperture match the logo almost exactly</li>
+          <li>5 weights free for commercial use</li>
+          <li>Variable-font version available</li>
+        </ul></div>
+        <div><h4 class="con">Watch out for</h4><ul>
+          <li>Slightly more compressed than the logo at small sizes</li>
+          <li>Tittle is round, not horizontal-elliptical like the logo</li>
+        </ul></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2. GENERAL SANS -->
+  <article class="card general">
+    <div class="card-head">
+      <h2>General Sans</h2>
+      <span class="role">Alt display · sans</span>
+      <span class="lic">Free · Indian Type Foundry · Fontshare</span>
+    </div>
+    <div class="card-body">
+      <h3 class="specimen-h">Creativity travels.<br/><em>Meaning stays.</em></h3>
+      <p class="specimen-sub">A degree more humanist than Switzer — slightly more character in the 'a' and 'g'. Good if you want headlines with a touch more personality than Inter, without going full editorial.</p>
+      <div class="specimen-grid">
+        <div class="glyph-row"><span class="lab">The wordmark, retraced</span>iyuno</div>
+        <div class="glyph-row"><span class="lab">Numerals & punctuation</span>0123 — Aa·Yy</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3. MANROPE -->
+  <article class="card manrope">
+    <div class="card-head">
+      <h2>Manrope</h2>
+      <span class="role">Body alt · sans</span>
+      <span class="lic">Free · Google Fonts · OFL</span>
+    </div>
+    <div class="card-body">
+      <h3 class="specimen-h">Creativity travels.<br/><em>Meaning stays.</em></h3>
+      <p class="specimen-sub">Rounded, geometric, friendly. Slightly more "tech-friendly" than Switzer; reads beautifully at body sizes. Use as a body alternative to Inter when you want more warmth.</p>
+    </div>
+  </article>
+
+  <!-- 4. JAKARTA -->
+  <article class="card jakarta">
+    <div class="card-head">
+      <h2>Plus Jakarta Sans</h2>
+      <span class="role">Body alt · sans</span>
+      <span class="lic">Free · Google Fonts · OFL</span>
+    </div>
+    <div class="card-body">
+      <h3 class="specimen-h">Creativity travels.<br/><em>Meaning stays.</em></h3>
+      <p class="specimen-sub">Geometric humanist with strong CJK companion (good Korean/Japanese rendering). Matches the iyuno DNA at body sizes; slightly more neutral than Switzer.</p>
+    </div>
+  </article>
+
+  <!-- 5. INSTRUMENT SERIF -->
+  <article class="card instrument">
+    <div class="card-head">
+      <h2>Instrument Serif</h2>
+      <span class="role">★ Editorial accent · serif</span>
+      <span class="lic">Free · Google Fonts · OFL</span>
+    </div>
+    <div class="card-body">
+      <h3 class="specimen-h serif">Creativity travels.<br/><em>Meaning stays.</em></h3>
+      <p class="specimen-sub">A modern, transitional serif — at its best in italic. The brand voice is "lightly literary"; this is the font that earns that line. Use sparingly: hero headlines, pull-quotes, the occasional editorial moment.</p>
+      <div class="specimen-grid">
+        <div class="glyph-row" style="font-style: italic;"><span class="lab">Italic, the signature mode</span>The story stays the same.</div>
+        <div class="glyph-row"><span class="lab">Roman, restrained</span>Vol. 04 · 2026</div>
+      </div>
+      <div class="why">
+        <div><h4 class="pro">Why it works</h4><ul>
+          <li>Adds editorial gravitas the brand voice asks for</li>
+          <li>Italic feels declarative — "creativity travels"</li>
+          <li>Pairs cleanly with sans without competing</li>
+        </ul></div>
+        <div><h4 class="con">Use sparingly</h4><ul>
+          <li>1–2 moments per surface — never body text</li>
+          <li>Hero, pull-quote, section opener; nothing else</li>
+        </ul></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6. FRAUNCES -->
+  <article class="card fraunces">
+    <div class="card-head">
+      <h2>Fraunces</h2>
+      <span class="role">Editorial alt · serif</span>
+      <span class="lic">Free · Google Fonts · OFL</span>
+    </div>
+    <div class="card-body">
+      <h3 class="specimen-h serif">Creativity travels.<br/><em>Meaning stays.</em></h3>
+      <p class="specimen-sub">Variable serif with optical sizing and a SOFT axis — you can dial in exactly how warm or sharp it feels. More flexible than Instrument; more present on the page.</p>
+    </div>
+  </article>
+
+  <!-- VERDICT / PROPOSED STACK -->
+  <section class="verdict">
+    <div>
+      <h3>One brand font does the job. <em>Switzer.</em></h3>
+      <p>The discipline of a design system is in <em>removing</em> choices, not adding them. Six fonts is theatre. One sans handles every visible surface — hero, body, UI, navigation, cards. Hierarchy comes from <strong>scale and weight</strong>, not font-family swaps.</p>
+      <p>This is the same approach Stripe, Linear, and Vercel use: pick one well-drawn sans, learn it cold, ship it everywhere. The brand reads as <em>itself</em> at every size.</p>
+      <p style="margin-top: 16px; padding-top: 16px; border-top: 1px dashed oklch(1 0 0 / 0.15); font-size: 12px; color: var(--ink-300);">If you later need an editorial moment (a flagship report, a pull-quote-heavy long-read), add Instrument Serif as a single tactical exception. Don't bake it into the system upfront.</p>
+    </div>
+    <div class="stack">
+      <div class="stack-row">
+        <span class="role">Brand</span>
+        <span class="name">Switzer<small>Everything visible — display, body, UI, navigation, cards. Weights 300–900 available; the system uses 400/500/600/700/800.</small></span>
+      </div>
+      <div class="stack-row">
+        <span class="role">Mono</span>
+        <span class="name">JetBrains Mono<small>Functional only. Timecodes, IDs, eyebrows, code blocks. Never used for body or display.</small></span>
+      </div>
+      <div class="stack-row" style="opacity: 0.7;">
+        <span class="role">KR fallback</span>
+        <span class="name">Pretendard<small>Locale fallback — auto-applied to <code>:lang(ko)</code>. Not a brand choice.</small></span>
+      </div>
+      <div class="stack-row" style="opacity: 0.7;">
+        <span class="role">JP fallback</span>
+        <span class="name">Noto Sans JP<small>Locale fallback — auto-applied to <code>:lang(ja)</code>. Not a brand choice.</small></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

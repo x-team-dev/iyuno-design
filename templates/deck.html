@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Iyuno · Deck Template</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  html, body { margin: 0; background: var(--ink-950); color: var(--fg); }
+  deck-stage { background: var(--ink-950); }
+
+  /* Slide base — 1920×1080 */
+  .slide {
+    width: 1920px; height: 1080px;
+    padding: 96px 120px;
+    display: flex; flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+  }
+  .slide.dark { background: var(--ink-950); color: var(--ink-50); --fg: var(--ink-50); }
+  .slide.amber { background: var(--accent); color: var(--amber-900); --fg: var(--amber-900); }
+  .slide.warm { background: var(--ink-100); }
+
+  .stamp {
+    position: absolute; top: 56px; left: 120px; right: 120px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 18px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .slide.dark .stamp { color: var(--ink-400); }
+  .slide.amber .stamp { color: var(--amber-900); opacity: 0.7; }
+  .stamp .num::before { content: '— '; }
+
+  .foot {
+    position: absolute; bottom: 56px; left: 120px; right: 120px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 16px;
+    color: var(--fg-3);
+  }
+  .slide.dark .foot { color: var(--ink-400); }
+  .slide.amber .foot { color: var(--amber-900); opacity: 0.7; }
+
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 18px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-fg); display: inline-block;
+  }
+  .slide:not(.amber) .eyebrow { color: var(--accent); }
+  .slide.amber .eyebrow { color: var(--amber-900); }
+
+  .display {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 144px; line-height: 1.0; letter-spacing: -0.02em;
+    margin: 24px 0 0; color: inherit;
+    max-width: 18ch;
+  }
+  .display em { font-style: normal; color: var(--accent); }
+  .display .amber-i { color: var(--accent); }
+  .slide.amber .display em { color: var(--ink-950); }
+
+  .h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 96px; line-height: 1.05; letter-spacing: -0.015em;
+    margin: 24px 0 0; max-width: 22ch;
+  }
+  .h3 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 56px; line-height: 1.1; letter-spacing: -0.01em;
+    margin: 0 0 18px;
+  }
+  .lede {
+    font-size: 32px; line-height: 1.5; max-width: 36ch;
+    color: var(--fg-2); margin: 36px 0 0; font-weight: 400;
+  }
+  .slide.dark .lede { color: var(--ink-300); }
+  .slide.amber .lede { color: var(--amber-900); opacity: 0.85; }
+
+  /* Title slide */
+  .slide-title {
+    align-items: flex-start; justify-content: center;
+  }
+  .slide-title .display { max-width: 16ch; }
+  .slide-title .display .stay { color: var(--accent); }
+
+  /* Section divider */
+  .slide-section { justify-content: center; }
+  .slide-section .section-label {
+    font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .slide-section .display { margin-top: 32px; }
+
+  /* Two-column comparison */
+  .twocol {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    margin-top: 56px; flex: 1;
+  }
+  .col { display: flex; flex-direction: column; gap: 18px; }
+  .col-bar { width: 64px; height: 4px; border-radius: 2px; background: var(--accent); }
+  .col h3 { font-family: var(--font-display); font-weight: 700; font-size: 56px; letter-spacing: -0.01em; line-height: 1.1; margin: 0; }
+  .col p { font-size: 24px; line-height: 1.55; color: var(--fg-2); margin: 0; max-width: 32ch; }
+  .slide.dark .col p { color: var(--ink-300); }
+
+  /* Stat slide */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px;
+    margin-top: 80px; flex: 1; align-items: flex-start;
+  }
+  .stat-num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 184px; line-height: 0.95; letter-spacing: -0.03em;
+    color: var(--accent);
+    display: block;
+  }
+  .slide.amber .stat-num { color: var(--ink-950); }
+  .stat-label {
+    font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-3); margin-top: 18px;
+    display: block;
+  }
+  .slide.dark .stat-label { color: var(--ink-300); }
+  .stat-note { font-size: 22px; color: var(--fg-2); margin-top: 12px; line-height: 1.5; max-width: 24ch; display: block; }
+  .slide.dark .stat-note { color: var(--ink-300); }
+
+  /* Quote slide */
+  .slide-quote { justify-content: center; padding: 96px 200px; }
+  .slide-quote .accent-quote {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 96px; line-height: 1.15; letter-spacing: -0.02em;
+    margin: 0; max-width: 22ch;
+  }
+  .slide-quote .accent-quote::before { content: '"'; color: var(--accent); margin-right: 12px; }
+  .slide-quote cite {
+    display: block; margin-top: 56px;
+    font-family: var(--font-mono); font-size: 20px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-300); font-style: normal;
+  }
+
+  /* Bullets */
+  .bullets { display: flex; flex-direction: column; gap: 36px; margin-top: 64px; flex: 1; }
+  .bullet { display: grid; grid-template-columns: 80px 1fr; gap: 32px; align-items: baseline; }
+  .bullet .num {
+    font-family: var(--font-mono); font-size: 22px; color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .bullet h4 { font-family: var(--font-display); font-weight: 700; font-size: 40px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .bullet p { font-size: 22px; line-height: 1.55; color: var(--fg-2); margin: 0; max-width: 56ch; }
+  .slide.dark .bullet p { color: var(--ink-300); }
+
+  /* Diagram (CMG mock) */
+  .diagram-shell {
+    margin-top: 48px; flex: 1;
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: 14px; padding: 56px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slide.dark .diagram-shell { background: var(--ink-900); border-color: var(--ink-800); }
+  .pipeline {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; align-items: center; width: 100%;
+  }
+  .pipe-node {
+    background: var(--bg); border: 1px solid var(--border-strong);
+    border-radius: 14px; padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+  }
+  .slide.dark .pipe-node { background: var(--ink-950); border-color: var(--ink-800); }
+  .pipe-node.featured { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .pipe-node-head {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--fg-3);
+  }
+  .pipe-node-name {
+    font-family: var(--font-display); font-size: 28px; letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .slide.dark .pipe-node-name { color: var(--ink-50); }
+  .pipe-node-desc {
+    font-size: 14px; color: var(--fg-2); line-height: 1.4;
+  }
+  .pipe-arrow {
+    color: var(--fg-3); text-align: center; font-family: var(--font-mono); font-size: 28px;
+  }
+  .slide.dark .pipe-arrow { color: var(--ink-400); }
+
+  /* Closing slide */
+  .slide-close { justify-content: center; align-items: flex-start; }
+  .slide-close .close-mark { display: flex; align-items: center; gap: 32px; margin-top: 32px; }
+  .slide-close img { height: 84px; }
+  .slide-close .url { font-family: var(--font-mono); font-size: 32px; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- 01 — TITLE -->
+  <section class="slide slide-title dark" data-screen-label="01 Title">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo-white.svg" height="36" alt="Iyuno"/>
+      <span class="num">Q4 / 2026</span>
+    </div>
+    <span class="eyebrow">Investor Briefing · 30 min</span>
+    <h1 class="display">Creativity travels.<br/><em class="stay">Meaning stays.</em></h1>
+    <div class="foot">
+      <span>The intelligence infrastructure for global creative distribution.</span>
+      <span>iyuno.com</span>
+    </div>
+  </section>
+
+  <!-- 02 — SECTION DIVIDER -->
+  <section class="slide slide-section warm" data-screen-label="02 Section · Why now">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo.svg" height="36" alt="Iyuno"/>
+      <span class="num">01</span>
+    </div>
+    <span class="section-label">Section one</span>
+    <h2 class="display">Why<br/>now.</h2>
+    <div class="foot">
+      <span>The shape of global content has changed.</span>
+      <span>—</span>
+    </div>
+  </section>
+
+  <!-- 03 — BIG STAT -->
+  <section class="slide" data-screen-label="03 Stats">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo.svg" height="36" alt="Iyuno"/>
+      <span class="num">02 · The market</span>
+    </div>
+    <h2 class="h2">Streamers ship<br/>everywhere, all at once.</h2>
+    <div class="stats">
+      <div>
+        <span class="stat-num">96<span style="font-size:0.45em;color:var(--fg-2);">%</span></span>
+        <span class="stat-label">Day-and-date</span>
+        <span class="stat-note">of top-tier originals release simultaneously across 30+ locales.</span>
+      </div>
+      <div>
+        <span class="stat-num">42<span style="font-size:0.45em;color:var(--fg-2);">×</span></span>
+        <span class="stat-label">Volume vs 2018</span>
+        <span class="stat-note">growth in dubbed and subtitled minutes commissioned annually.</span>
+      </div>
+      <div>
+        <span class="stat-num">6.4<span style="font-size:0.45em;color:var(--fg-2);">d</span></span>
+        <span class="stat-label">Avg. turnaround</span>
+        <span class="stat-note">down from 28 days; the floor is approaching same-day.</span>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Sources: Iyuno data lake · MPA Global Entertainment Trends 2025</span>
+      <span>03 / 09</span>
+    </div>
+  </section>
+
+  <!-- 04 — TWO COLUMN COMPARISON -->
+  <section class="slide" data-screen-label="04 Comparison">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo.svg" height="36" alt="Iyuno"/>
+      <span class="num">03 · The shift</span>
+    </div>
+    <h2 class="h2">From pipeline<br/>to <em style="font-style:normal;color:var(--accent);">memory</em>.</h2>
+    <div class="twocol">
+      <div class="col">
+        <div class="col-bar" style="background:var(--ink-300);"></div>
+        <h3>The old way</h3>
+        <p>Sequential: subtitle, then dub, then QC, then deliver. Every locale relearns the show. Style notes live in spreadsheets and Slack threads.</p>
+      </div>
+      <div class="col">
+        <div class="col-bar"></div>
+        <h3>The Iyuno way</h3>
+        <p>A Contextual Memory Graph carries voice, glossary, and tone forward. Locales branch from one source of truth. Reviewers see why, not just what.</p>
+      </div>
+    </div>
+    <div class="foot">
+      <span>The CMG is what makes meaning portable.</span>
+      <span>04 / 09</span>
+    </div>
+  </section>
+
+  <!-- 05 — DIAGRAM (PRODUCT MAP) -->
+  <section class="slide warm" data-screen-label="05 Product map">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo.svg" height="36" alt="Iyuno"/>
+      <span class="num">04 · The platform</span>
+    </div>
+    <h2 class="h2">Four products,<br/>one memory.</h2>
+    <div class="diagram-shell">
+      <div class="pipeline">
+        <div class="pipe-node">
+          <span class="pipe-node-head">Ingest</span>
+          <span class="pipe-node-name">MSX</span>
+          <span class="pipe-node-desc">Media services exchange — assets, locales, deliveries.</span>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node featured">
+          <span class="pipe-node-head">The brain</span>
+          <span class="pipe-node-name">CLOE</span>
+          <span class="pipe-node-desc">Contextual Lifecycle Orchestration. Memory + agents.</span>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node">
+          <span class="pipe-node-head">Output</span>
+          <span class="pipe-node-name">SubX · ARIA</span>
+          <span class="pipe-node-desc">Subtitle pipeline · AI dubbing editor.</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Single graph. Four products read and write to it.</span>
+      <span>05 / 09</span>
+    </div>
+  </section>
+
+  <!-- 06 — BULLETS / PRINCIPLES -->
+  <section class="slide" data-screen-label="06 Principles">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo.svg" height="36" alt="Iyuno"/>
+      <span class="num">05 · How we build</span>
+    </div>
+    <h2 class="h2">Three commitments.</h2>
+    <div class="bullets">
+      <div class="bullet">
+        <span class="num">— 01</span>
+        <div>
+          <h4>Honor the creator.</h4>
+          <p>Every model and every editor is judged by whether the original intent survived. We do not optimize for throughput at the expense of meaning.</p>
+        </div>
+      </div>
+      <div class="bullet">
+        <span class="num">— 02</span>
+        <div>
+          <h4>Show your work.</h4>
+          <p>Every translated cue, every voice match, every glossary decision is traceable to its source. Reviewers see the why, not just the what.</p>
+        </div>
+      </div>
+      <div class="bullet">
+        <span class="num">— 03</span>
+        <div>
+          <h4>Move at the speed of release.</h4>
+          <p>Day-and-date is the floor. CMG-backed pipelines collapse turnaround from weeks to hours without re-doing context for every locale.</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>—</span>
+      <span>06 / 09</span>
+    </div>
+  </section>
+
+  <!-- 07 — QUOTE -->
+  <section class="slide slide-quote dark" data-screen-label="07 Quote">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo-white.svg" height="36" alt="Iyuno"/>
+      <span class="num">06 · A customer</span>
+    </div>
+    <p class="accent-quote">CLOE didn't replace our localization team. It gave them their evenings back."</p>
+    <cite>— Head of Localization, Tier-1 streamer</cite>
+    <div class="foot">
+      <span>—</span>
+      <span>07 / 09</span>
+    </div>
+  </section>
+
+  <!-- 08 — BIG IDEA / AMBER -->
+  <section class="slide amber slide-section" data-screen-label="08 Big idea">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo-mono-amber.svg" height="36" alt="Iyuno"/>
+      <span class="num">07 · The vision</span>
+    </div>
+    <span class="eyebrow">The role we play</span>
+    <h2 class="display">The intelligence<br/>infrastructure<br/>for global<br/><em>creative distribution.</em></h2>
+    <div class="foot">
+      <span>Not a translation company. The layer between any story and any audience.</span>
+      <span>08 / 09</span>
+    </div>
+  </section>
+
+  <!-- 09 — CLOSING / CTA -->
+  <section class="slide slide-close dark" data-screen-label="09 Closing">
+    <div class="stamp">
+      <img src="../assets/iyuno-logo-white.svg" height="36" alt="Iyuno"/>
+      <span class="num">— Fin</span>
+    </div>
+    <span class="eyebrow">Questions?</span>
+    <h2 class="display">Let's talk.</h2>
+    <p class="lede">We share roadmap previews and pilot slots privately. The fastest way in is a 30-minute call with the team.</p>
+    <div class="close-mark">
+      <span class="url">iyuno.com / talk</span>
+    </div>
+    <div class="foot">
+      <span>Refresh, not rebrand. Same wordmark, sharper instrument.</span>
+      <span>09 / 09</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script type="application/json" id="speaker-notes">[
+  "Open with the headline. 'Creativity travels. Meaning stays.' Pause. That sentence is the whole company. Don't unpack it yet — let it sit.",
+  "Section divider. Tell them: we're going to walk through three things — why now, what we built, and where we're going. Two minutes per section.",
+  "The market slide. Three numbers. Read each one slowly. The 6.4 days stat is the most surprising — that's the wedge.",
+  "The shift. This is the conceptual move. Old way is sequential. New way is memory-first. The Contextual Memory Graph is what makes locales cheap to add.",
+  "Product map. Four products, one graph. CLOE is the brain. MSX is intake, SubX and ARIA are surface. Memory is the thing nobody else has.",
+  "Three commitments. Read each header, then the body. Pause between. These aren't aspirations — they're the actual design constraints.",
+  "Quote slide. Don't read it aloud unless the room is small. Let them read it themselves. The point is 'gave them their evenings back' — humanize the ROI.",
+  "The vision slide. This is the line we want them to remember. Not a translation company. Infrastructure. Repeat it.",
+  "Closing. Open the floor. If they want a follow-up, the path is iyuno.com/talk — 30-minute call. Don't sell harder than that here."
+]</script>
+<script src="deck-stage.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Semantic colors</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--bg); }
+  .row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .tile { border-radius:var(--r-md); padding:14px 14px 16px; border:1px solid var(--border); background:var(--bg-elev); }
+  .dot { width:14px; height:14px; border-radius:var(--r-full); display:inline-block; margin-right:8px; vertical-align:middle; }
+  .lbl { font-family:var(--font-mono); font-size:11px; color:var(--fg-3); margin-top:8px; text-transform:uppercase; letter-spacing:.08em; }
+  .name { font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--fg); }
+  .pill { display:inline-block; padding:3px 10px; border-radius:var(--r-md); font-family:var(--font-body); font-size:12px; margin-top:10px; }
+</style></head>
+<body class="ds-root">
+  <div class="row">
+    <div class="tile">
+      <div><span class="dot" style="background:var(--success)"></span><span class="name">Success</span></div>
+      <div class="pill" style="background:var(--success-bg); color:var(--success)">Build complete</div>
+      <div class="lbl">--success</div>
+    </div>
+    <div class="tile">
+      <div><span class="dot" style="background:var(--warning)"></span><span class="name">Warning</span></div>
+      <div class="pill" style="background:var(--warning-bg); color:oklch(0.50 0.13 70)">Awaiting review</div>
+      <div class="lbl">--warning</div>
+    </div>
+    <div class="tile">
+      <div><span class="dot" style="background:var(--danger)"></span><span class="name">Danger</span></div>
+      <div class="pill" style="background:var(--danger-bg); color:var(--danger)">Step failed</div>
+      <div class="lbl">--danger</div>
+    </div>
+    <div class="tile">
+      <div><span class="dot" style="background:var(--info)"></span><span class="name">Info</span></div>
+      <div class="pill" style="background:var(--info-bg); color:var(--info)">Running</div>
+      <div class="lbl">--info</div>
+    </div>
+  </div>
+</body></html>

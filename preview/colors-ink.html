@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Ink scale</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--bg); }
+  .row { display:grid; grid-template-columns:repeat(11,1fr); gap:6px; }
+  .sw { aspect-ratio: 1/1.1; border-radius:var(--r-md); padding:8px; display:flex; flex-direction:column; justify-content:flex-end; border:1px solid transparent; }
+  .sw .n { font-family:var(--font-mono); font-size:11px; opacity:.85; }
+</style></head>
+<body class="ds-root">
+  <div class="row">
+    <div class="sw" style="background:var(--ink-50); color:var(--ink-950); border-color:var(--ink-200)"><span class="n">50</span></div>
+    <div class="sw" style="background:var(--ink-100); color:var(--ink-950)"><span class="n">100</span></div>
+    <div class="sw" style="background:var(--ink-200); color:var(--ink-950)"><span class="n">200</span></div>
+    <div class="sw" style="background:var(--ink-300); color:var(--ink-950)"><span class="n">300</span></div>
+    <div class="sw" style="background:var(--ink-400); color:var(--ink-950)"><span class="n">400</span></div>
+    <div class="sw" style="background:var(--ink-500); color:var(--ink-50)"><span class="n">500</span></div>
+    <div class="sw" style="background:var(--ink-600); color:var(--ink-50)"><span class="n">600</span></div>
+    <div class="sw" style="background:var(--ink-700); color:var(--ink-50)"><span class="n">700</span></div>
+    <div class="sw" style="background:var(--ink-800); color:var(--ink-50)"><span class="n">800</span></div>
+    <div class="sw" style="background:var(--ink-900); color:var(--ink-50)"><span class="n">900</span></div>
+    <div class="sw" style="background:var(--ink-950); color:var(--ink-50)"><span class="n">950</span></div>
+  </div>
+</body></html>

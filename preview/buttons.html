@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body{margin:0;padding:24px;background:var(--bg)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+  .btn{font-family:var(--font-body);font-weight:600;font-size:14px;padding:10px 18px;border-radius:var(--r-md);border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all var(--d-fast) var(--ease)}
+  .b-primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+  .b-primary:hover{background:oklch(0.745 0.165 72)}
+  .b-secondary{background:#fff;color:var(--fg);border-color:var(--border-strong)}
+  .b-secondary:hover{border-color:var(--ink-700);background:var(--ink-50)}
+  .b-ghost{background:transparent;color:var(--fg-2);border-color:transparent}
+  .b-ghost:hover{background:var(--ink-100);color:var(--fg)}
+  .b-danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+  .b-sm{padding:6px 12px;font-size:13px}
+  .b-lg{padding:14px 22px;font-size:15px}
+</style></head>
+<body class="ds-root">
+  <div class="row">
+    <button class="btn b-primary">Start a build</button>
+    <button class="btn b-secondary">Cancel</button>
+    <button class="btn b-ghost">Skip for now</button>
+    <button class="btn b-danger">Delete</button>
+  </div>
+  <div class="row">
+    <button class="btn b-primary b-sm">Small</button>
+    <button class="btn b-primary">Default</button>
+    <button class="btn b-primary b-lg">Large</button>
+  </div>
+</body></html>

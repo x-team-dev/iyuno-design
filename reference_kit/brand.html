@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Brand · Iyuno Reference Kit</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="kit.css"/>
+<style>
+  .logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .logo-tile {
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 32px; min-height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .logo-tile.dark { background: var(--ink-950); border-color: var(--ink-900); }
+  .logo-tile.amber { background: var(--accent); }
+  .logo-tile.warm { background: var(--ink-100); }
+  .logo-tile-meta {
+    position: absolute; top: 10px; left: 14px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    color: var(--fg-3); text-transform: uppercase;
+  }
+  .logo-tile.dark .logo-tile-meta { color: var(--ink-400); }
+  .logo-tile.amber .logo-tile-meta { color: var(--amber-900); }
+  .logo-foot {
+    position: absolute; bottom: 10px; right: 14px;
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+  }
+  .logo-tile.dark .logo-foot { color: var(--ink-400); }
+  .logo-tile.amber .logo-foot { color: var(--amber-900); }
+
+  .clearspace {
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    background: var(--bg-elev); padding: 60px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .clearspace .ratio-box {
+    position: relative;
+    padding: 28px;
+    border: 1px dashed var(--accent);
+  }
+  .clearspace-label {
+    position: absolute; top: -10px; left: 16px;
+    background: var(--bg-elev); padding: 0 6px;
+    font-family: var(--font-mono); font-size: 10px;
+    color: var(--accent-fg); background-color: var(--accent);
+    border-radius: var(--r-sm);
+  }
+
+  .swatch-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .swatch {
+    border-radius: var(--r-md); padding: 14px;
+    min-height: 88px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 11px;
+  }
+  .swatch-name { font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 10px; }
+  .swatch-hex { font-size: 11px; opacity: 0.85; }
+
+  .pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pair {
+    border-radius: var(--r-md); padding: 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    border: 1px solid var(--border);
+  }
+  .pair-good { border-left: 3px solid var(--success); }
+  .pair-bad { border-left: 3px solid var(--danger); }
+  .pair-tag {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pair-good .pair-tag { color: var(--success); }
+  .pair-bad .pair-tag { color: var(--danger); }
+  .pair-vis {
+    border-radius: var(--r-sm); padding: 28px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 90px;
+  }
+  .pair-note { font-size: 12px; color: var(--fg-2); line-height: 1.5; margin: 0; }
+
+  .download-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .download {
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    background: var(--bg-elev); padding: 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: all var(--d-fast) var(--ease);
+    color: var(--fg);
+  }
+  .download:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .download-mini {
+    height: 56px; border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .download-name {
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg);
+    word-break: break-all;
+  }
+  .download-meta {
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+  }
+
+  .quote-block {
+    background: var(--ink-950); color: var(--ink-50);
+    border-radius: var(--r-md); padding: 48px;
+    display: flex; gap: 32px;
+  }
+  .quote-block .accent-bar { width: 4px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
+  .quote-block blockquote {
+    font-family: var(--font-display); font-weight: 700; font-size: 32px;
+    line-height: 1.25; letter-spacing: -0.01em; margin: 0;
+  }
+  .quote-block blockquote em { font-style: italic; color: var(--accent); }
+  .quote-block cite {
+    display: block; margin-top: 18px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--ink-400);
+    font-style: normal; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  .voice-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .voice-table th, .voice-table td {
+    text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--border);
+    vertical-align: top; font-size: 13px; line-height: 1.55;
+  }
+  .voice-table th {
+    font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--fg-3); font-weight: 500;
+    width: 18%;
+  }
+  .voice-table .v-yes { color: var(--fg); }
+  .voice-table .v-no { color: var(--fg-3); text-decoration: line-through; }
+
+  .moodboard { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
+  .mood-tile {
+    border-radius: var(--r-md); border: 1px solid var(--border);
+    padding: 24px; min-height: 180px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative; overflow: hidden;
+  }
+  .mood-warm { background: linear-gradient(135deg, var(--amber-50), var(--amber-200)); }
+  .mood-ink { background: var(--ink-950); color: var(--ink-50); border-color: var(--ink-900); }
+  .mood-paper { background: var(--bg-elev); }
+  .mood-hi { font-family: var(--font-display); font-size: 22px; line-height: 1.2; margin: 0; letter-spacing: -0.01em; font-weight: 400; }
+  .mood-lo { font-family: var(--font-mono); font-size: 10px; opacity: 0.7; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 6px; }
+  .mood-paper .mood-hi { color: var(--fg); }
+  .mood-warm .mood-hi { color: var(--amber-900); }
+</style>
+</head>
+<body class="ds-root">
+<header class="kit-head">
+  <div class="kit-head-inner">
+    <a href="index.html" class="kit-brand"><img src="../assets/iyuno-logo.svg" alt="Iyuno" height="22"/><span class="kit-eyebrow">REFERENCE KIT · BRAND</span></a>
+    <nav class="kit-nav">
+      <a href="tokens.html">Tokens</a>
+      <a href="components.html">Components</a>
+      <a href="brand.html" class="active">Brand</a>
+      <a href="../templates/deck.html">Deck</a>
+      <a href="../templates/one-pager.html">One-pager</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-rail">
+  <aside class="rail">
+    <div class="rail-section">
+      <h4>Brand</h4>
+      <a href="#wordmark">Wordmark</a>
+      <a href="#mark">Mark</a>
+      <a href="#clearspace">Clear space</a>
+      <a href="#palette">Palette</a>
+      <a href="#pairings">Pairings</a>
+      <a href="#voice">Voice</a>
+      <a href="#mood">Mood</a>
+      <a href="#downloads">Downloads</a>
+    </div>
+    <div class="rail-section">
+      <h4>Notes</h4>
+      <p style="font-family:var(--font-body);font-size:12px;line-height:1.6;color:var(--fg-2);margin:0;">
+        The wordmark is sacred. We refresh; we don't rebrand. The amber dot above the "i" is the only place the signature color is allowed to be small.
+      </p>
+    </div>
+  </aside>
+
+  <main>
+    <div class="kit-section-head" style="margin-bottom: 40px;">
+      <span class="t-eyebrow">Brand</span>
+      <h2>Logo, mark, voice, and the rules around all of them.</h2>
+      <p class="lede">A "refresh, not rebrand." The wordmark stays. We made amber load-bearing, replaced cool grays with warm ink, and unified the system on one brand sans — Switzer — that matches the wordmark's DNA.</p>
+    </div>
+
+    <!-- WORDMARK -->
+    <section id="wordmark" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Wordmark</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">PRIMARY · 4 LOCKUPS</span>
+      </div>
+      <p style="font-size:13px;color:var(--fg-2);max-width:60ch;margin:0 0 20px;line-height:1.55;">The lowercase "iyuno" wordmark is the company. The amber dot above the "i" is its only ornament — it's also where our signature color comes from. Use the version that sits cleanly on the surface; never try to recolor.</p>
+      <div class="logo-grid">
+        <div class="logo-tile">
+          <span class="logo-tile-meta">Default · on light</span>
+          <img src="../assets/iyuno-logo.svg" height="48" alt="Iyuno"/>
+          <span class="logo-foot">iyuno-logo.svg</span>
+        </div>
+        <div class="logo-tile dark">
+          <span class="logo-tile-meta">White · on ink</span>
+          <img src="../assets/iyuno-logo-white.svg" height="48" alt="Iyuno"/>
+          <span class="logo-foot">iyuno-logo-white.svg</span>
+        </div>
+        <div class="logo-tile warm">
+          <span class="logo-tile-meta">Mono · on warm</span>
+          <img src="../assets/iyuno-logo-mono.svg" height="48" alt="Iyuno"/>
+          <span class="logo-foot">iyuno-logo-mono.svg</span>
+        </div>
+        <div class="logo-tile" style="background: var(--amber-900);">
+          <span class="logo-tile-meta" style="color: var(--amber-200);">Mono amber · on deep amber</span>
+          <img src="../assets/iyuno-logo-mono-amber.svg" height="48" alt="Iyuno"/>
+          <span class="logo-foot" style="color: var(--amber-200);">iyuno-logo-mono-amber.svg</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARK -->
+    <section id="mark" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Mark</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">FAVICON / APP ICON / AVATAR</span>
+      </div>
+      <p style="font-size:13px;color:var(--fg-2);max-width:60ch;margin:0 0 20px;line-height:1.55;">The standalone mark is the lowercase "i" with its amber dot — used only when the full wordmark is impractical (favicon, social avatar, app icon). Always on a square; never as inline body type.</p>
+      <div class="logo-grid">
+        <div class="logo-tile" style="aspect-ratio: 2/1;">
+          <span class="logo-tile-meta">Mark · on light</span>
+          <img src="../assets/iyuno-mark.svg" height="80" alt="Iyuno mark"/>
+        </div>
+        <div class="logo-tile dark" style="aspect-ratio: 2/1;">
+          <span class="logo-tile-meta">Mark · on ink</span>
+          <div style="width:80px;height:80px;background:var(--accent);border-radius:18px;display:flex;align-items:center;justify-content:center;">
+            <img src="../assets/iyuno-mark.svg" height="48" alt="Iyuno mark"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLEARSPACE -->
+    <section id="clearspace" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Clear space &amp; sizing</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">≥ 1× CAP HEIGHT · MIN 64px WIDE</span>
+      </div>
+      <p style="font-size:13px;color:var(--fg-2);max-width:60ch;margin:0 0 20px;line-height:1.55;">Surround the wordmark with at least one cap-height of negative space on all sides. Below 64px wide the wordmark loses the dot — switch to the mark.</p>
+      <div class="clearspace">
+        <div class="ratio-box">
+          <span class="clearspace-label">1× CLEAR</span>
+          <img src="../assets/iyuno-logo.svg" height="60" alt="Iyuno"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- PALETTE -->
+    <section id="palette" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Brand palette at a glance</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">FULL SCALES IN /tokens</span>
+      </div>
+      <p style="font-size:13px;color:var(--fg-2);max-width:60ch;margin:0 0 20px;line-height:1.55;">Two scales, no exceptions. Amber carries meaning — never decorative. Ink replaces the cool grays you might reach for from another system.</p>
+
+      <div style="margin-bottom:14px;">
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Amber · signature</div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:var(--amber-50);color:var(--amber-900);"><span class="swatch-name">50</span><span class="swatch-hex">#FEF8EC</span></div>
+          <div class="swatch" style="background:var(--amber-200);color:var(--amber-900);"><span class="swatch-name">200</span><span class="swatch-hex">#FCE2A8</span></div>
+          <div class="swatch" style="background:var(--amber-500);color:var(--amber-900);"><span class="swatch-name">500</span><span class="swatch-hex">#FFB549</span></div>
+          <div class="swatch" style="background:var(--amber-700);color:#fff;"><span class="swatch-name">700</span><span class="swatch-hex">#A86B16</span></div>
+          <div class="swatch" style="background:var(--amber-900);color:#fff;"><span class="swatch-name">900</span><span class="swatch-hex">#5B3A0C</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Ink · warm neutrals (hue ~80)</div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:var(--ink-50);color:var(--ink-900);border:1px solid var(--border);"><span class="swatch-name">50</span><span class="swatch-hex">#FAFAF8</span></div>
+          <div class="swatch" style="background:var(--ink-200);color:var(--ink-900);"><span class="swatch-name">200</span><span class="swatch-hex">#E6E4DE</span></div>
+          <div class="swatch" style="background:var(--ink-500);color:#fff;"><span class="swatch-name">500</span><span class="swatch-hex">#9A968D</span></div>
+          <div class="swatch" style="background:var(--ink-800);color:var(--ink-50);"><span class="swatch-name">800</span><span class="swatch-hex">#3A3833</span></div>
+          <div class="swatch" style="background:var(--ink-950);color:var(--ink-50);"><span class="swatch-name">950</span><span class="swatch-hex">#1F1D19</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAIRINGS -->
+    <section id="pairings" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Do &amp; don't</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">COLOR PAIRINGS · WORDMARK USAGE</span>
+      </div>
+      <div class="pair-grid">
+        <div class="pair pair-good">
+          <span class="pair-tag">DO · ink + paper + amber accent</span>
+          <div class="pair-vis" style="background:var(--ink-950);">
+            <img src="../assets/iyuno-logo-white.svg" height="36" alt=""/>
+          </div>
+          <p class="pair-note">Wordmark in white on ink. The dot stays amber. Reserved, confident, our default treatment for keynotes and footers.</p>
+        </div>
+        <div class="pair pair-bad">
+          <span class="pair-tag">DON'T · cool gradient backgrounds</span>
+          <div class="pair-vis" style="background:linear-gradient(135deg, oklch(0.55 0.18 280), oklch(0.65 0.18 230));">
+            <img src="../assets/iyuno-logo-white.svg" height="36" alt=""/>
+          </div>
+          <p class="pair-note">No purple-to-cyan AI gradients. They contradict the warm system and read as generic AI startup chrome.</p>
+        </div>
+        <div class="pair pair-good">
+          <span class="pair-tag">DO · amber surface, mono amber lockup</span>
+          <div class="pair-vis" style="background:var(--accent);">
+            <img src="../assets/iyuno-logo-mono-amber.svg" height="36" alt=""/>
+          </div>
+          <p class="pair-note">When the surface is amber itself, switch to the dark mono lockup. The dot disappears — that's correct.</p>
+        </div>
+        <div class="pair pair-bad">
+          <span class="pair-tag">DON'T · recolor the wordmark</span>
+          <div class="pair-vis" style="background:#fff;">
+            <span style="font-family:var(--font-display);font-size:36px;color:oklch(0.55 0.18 280);">iyuno</span>
+          </div>
+          <p class="pair-note">Never paint the wordmark in any non-system color. Black, white, ink-950, or mono-amber only.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOICE -->
+    <section id="voice" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Voice in two columns</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">WHAT WE SOUND LIKE / DON'T</span>
+      </div>
+      <table class="voice-table">
+        <tr>
+          <th>Posture</th>
+          <td class="v-yes">Quiet expertise. We say less, more carefully.</td>
+          <td class="v-no">Hype, stacked superlatives, "revolutionary."</td>
+        </tr>
+        <tr>
+          <th>Subject</th>
+          <td class="v-yes">The creator and their work. We are the infrastructure.</td>
+          <td class="v-no">"AI-powered," "reimagined with AI," "the future of."</td>
+        </tr>
+        <tr>
+          <th>Pronouns</th>
+          <td class="v-yes">"You" addresses the studio. "We" is Iyuno, used sparingly.</td>
+          <td class="v-no">Plural "users," "customers" in body copy.</td>
+        </tr>
+        <tr>
+          <th>Sentence shape</th>
+          <td class="v-yes">Short. Declarative. One idea per sentence.</td>
+          <td class="v-no">Long, comma-stitched, "leveraging cutting-edge AI to…"</td>
+        </tr>
+        <tr>
+          <th>Numbers</th>
+          <td class="v-yes">"312 cues across 4 locales." Specific, verifiable.</td>
+          <td class="v-no">"Best-in-class accuracy." (Best at what? Class of what?)</td>
+        </tr>
+        <tr>
+          <th>Casing</th>
+          <td class="v-yes">Sentence case for headlines. Mono ALL CAPS only as eyebrows.</td>
+          <td class="v-no">Title Case In Marketing Headlines.</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- MOOD -->
+    <section id="mood" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Mood</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">WARM · QUIET · INFRASTRUCTURE</span>
+      </div>
+      <div class="moodboard">
+        <div class="mood-tile mood-warm">
+          <p class="mood-hi">Honor the creator. Amplify the story.</p>
+          <span class="mood-lo">— Mission, restated</span>
+        </div>
+        <div class="mood-tile mood-ink">
+          <p class="mood-hi" style="color:var(--accent);font-style:italic;">Meaning</p>
+          <p class="mood-hi" style="margin-top:0;">stays.</p>
+          <span class="mood-lo">— Hero promise</span>
+        </div>
+        <div class="mood-tile mood-paper">
+          <p class="mood-hi">A refresh,<br/>not a rebrand.</p>
+          <span class="mood-lo">— Design philosophy</span>
+        </div>
+      </div>
+
+      <div class="quote-block" style="margin-top:24px;">
+        <div class="accent-bar"></div>
+        <div>
+          <blockquote>Iyuno exists to <em>honor human creativity</em>. Our mission is to amplify it and help it travel across languages, cultures, and formats — without losing its meaning.</blockquote>
+          <cite>— Company mission</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOADS -->
+    <section id="downloads" class="kit-section">
+      <div class="comp-meta" style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;">
+        <h3 style="font-family: var(--font-display); font-weight: 700;font-size:22px;margin:0;letter-spacing:-0.01em;">Downloads</h3>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);letter-spacing:0.05em;">ALL ASSETS · CLICK TO OPEN</span>
+      </div>
+      <div class="download-row">
+        <a href="../assets/iyuno-logo.svg" target="_blank" class="download">
+          <div class="download-mini" style="background:var(--bg-elev);border:1px solid var(--border);"><img src="../assets/iyuno-logo.svg" height="22" alt=""/></div>
+          <div class="download-name">iyuno-logo.svg</div>
+          <div class="download-meta">DEFAULT · LIGHT BG</div>
+        </a>
+        <a href="../assets/iyuno-logo-white.svg" target="_blank" class="download">
+          <div class="download-mini" style="background:var(--ink-950);"><img src="../assets/iyuno-logo-white.svg" height="22" alt=""/></div>
+          <div class="download-name">iyuno-logo-white.svg</div>
+          <div class="download-meta">WHITE · DARK BG</div>
+        </a>
+        <a href="../assets/iyuno-logo-mono.svg" target="_blank" class="download">
+          <div class="download-mini" style="background:var(--ink-100);"><img src="../assets/iyuno-logo-mono.svg" height="22" alt=""/></div>
+          <div class="download-name">iyuno-logo-mono.svg</div>
+          <div class="download-meta">MONO · WARM BG</div>
+        </a>
+        <a href="../assets/iyuno-logo-mono-amber.svg" target="_blank" class="download">
+          <div class="download-mini" style="background:var(--accent);"><img src="../assets/iyuno-logo-mono-amber.svg" height="22" alt=""/></div>
+          <div class="download-name">iyuno-logo-mono-amber.svg</div>
+          <div class="download-meta">MONO · AMBER BG</div>
+        </a>
+        <a href="../assets/iyuno-mark.svg" target="_blank" class="download">
+          <div class="download-mini" style="background:var(--bg-elev);border:1px solid var(--border);"><img src="../assets/iyuno-mark.svg" height="34" alt=""/></div>
+          <div class="download-name">iyuno-mark.svg</div>
+          <div class="download-meta">FAVICON · 1:1</div>
+        </a>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

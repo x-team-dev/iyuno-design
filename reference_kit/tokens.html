@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Tokens · Iyuno Reference Kit</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="kit.css"/>
+<style>
+  /* Token-specific */
+  .swatch-row { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; }
+  .swatch {
+    aspect-ratio: 1.6;
+    border-radius: var(--r-sm); padding: 8px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    font-family: var(--font-mono); font-size: 10px;
+    border: 1px solid color-mix(in oklab, currentColor 12%, transparent);
+  }
+  .swatch .step { font-weight: 600; }
+  .swatch .hex { opacity: 0.7; }
+  .swatch.signature { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .legend { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .legend-row {
+    display: grid; grid-template-columns: 28px 1fr 200px 200px 1fr;
+    align-items: center; gap: 16px;
+    padding: 12px 14px; border-radius: var(--r-md);
+    background: var(--bg-elev); border: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 12px;
+  }
+  .legend-row .chip {
+    width: 28px; height: 28px; border-radius: var(--r-sm);
+    border: 1px solid color-mix(in oklab, currentColor 14%, transparent);
+  }
+  .legend-row .name { color: var(--fg); font-weight: 600; }
+  .legend-row .hex, .legend-row .oklch { color: var(--fg-3); }
+  .legend-row .var { color: var(--fg-2); }
+
+  .type-row {
+    display: grid; grid-template-columns: 280px 1fr;
+    gap: 32px; padding: 20px 0;
+    border-top: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .type-row:first-of-type { border-top: 0; }
+  .type-row .meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); line-height: 1.7; }
+  .type-row .meta strong { color: var(--fg); font-weight: 600; }
+  .type-row .specimen { color: var(--fg); }
+
+  .scale-grid {
+    display: grid; grid-template-columns: 80px 1fr 100px 90px;
+    gap: 14px 20px; align-items: center;
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg-3);
+  }
+  .scale-grid .preview { background: var(--ink-950); height: 14px; border-radius: 2px; }
+  .scale-grid .preview.r { background: var(--accent); border: 1px solid var(--amber-700); }
+
+  .radius-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .radius-card {
+    aspect-ratio: 1; background: var(--bg-elev); border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg-2);
+    text-align: center; padding: 10px;
+  }
+
+  .shadow-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; padding: 12px; }
+  .shadow-card {
+    aspect-ratio: 1; background: #fff; border-radius: var(--r-md);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg-2);
+  }
+  .shadow-card .name { font-weight: 600; color: var(--fg); }
+
+  .ease-card {
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 18px; display: flex; gap: 24px; align-items: center;
+  }
+  .ease-card .ball {
+    width: 28px; height: 28px; border-radius: 99px; background: var(--accent);
+    animation: slide 1800ms var(--ease) infinite alternate;
+  }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(180px); } }
+  .ease-card .info { flex: 1; }
+  .ease-card .info strong { font-family: var(--font-body); font-size: 14px; color: var(--fg); }
+  .ease-card .info .meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 2px; }
+
+  .copy-line {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 11px;
+    background: var(--ink-950); color: var(--ink-50);
+    padding: 4px 10px; border-radius: var(--r-sm);
+  }
+</style>
+</head>
+<body class="ds-root">
+<header class="kit-head">
+  <div class="kit-head-inner">
+    <a href="index.html" class="kit-brand"><img src="../assets/iyuno-logo.svg" alt="Iyuno" height="22"/><span class="kit-eyebrow">REFERENCE KIT · TOKENS</span></a>
+    <nav class="kit-nav">
+      <a href="tokens.html" class="active">Tokens</a>
+      <a href="components.html">Components</a>
+      <a href="brand.html">Brand</a>
+      <a href="../templates/deck.html">Deck</a>
+      <a href="../templates/one-pager.html">One-pager</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-rail">
+  <aside class="rail">
+    <div class="rail-section">
+      <h4>On this page</h4>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#scale">Type scale</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#radii">Radii</a>
+      <a href="#shadow">Shadows</a>
+      <a href="#motion">Motion</a>
+    </div>
+    <div class="rail-section">
+      <h4>How to use</h4>
+      <p style="font-family:var(--font-body);font-size:12px;line-height:1.6;color:var(--fg-2);margin:0;">
+        Every token is a CSS variable in <code>colors_and_type.css</code>. Reference with <code>var(--name)</code>.
+      </p>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ============ COLOR ============ -->
+    <section id="color" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">01 · Color</span>
+        <h2>Warm amber, warm ink. No cool grays.</h2>
+        <p class="lede">Two scales do almost everything: amber (signature, hue 75–85) for action and emphasis, ink (warm neutrals, hue 80) for surface and text. Semantic colors are warm-leaning — even our blues and reds tilt slightly into amber.</p>
+      </div>
+
+      <h3 style="font-family:var(--font-body);font-weight:600;font-size:14px;margin:24px 0 8px;letter-spacing:0.04em;text-transform:uppercase;color:var(--fg-3);">Amber — signature</h3>
+      <div class="swatch-row" id="amberRow"></div>
+
+      <h3 style="font-family:var(--font-body);font-weight:600;font-size:14px;margin:32px 0 8px;letter-spacing:0.04em;text-transform:uppercase;color:var(--fg-3);">Ink — warm neutrals</h3>
+      <div class="swatch-row" id="inkRow"></div>
+
+      <h3 style="font-family:var(--font-body);font-weight:600;font-size:14px;margin:32px 0 8px;letter-spacing:0.04em;text-transform:uppercase;color:var(--fg-3);">Semantic feedback</h3>
+      <div class="legend" id="semantic"></div>
+
+      <h3 style="font-family:var(--font-body);font-weight:600;font-size:14px;margin:32px 0 8px;letter-spacing:0.04em;text-transform:uppercase;color:var(--fg-3);">Surface roles (light)</h3>
+      <div class="legend" id="roles"></div>
+    </section>
+
+    <!-- ============ TYPE ============ -->
+    <section id="type" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">02 · Type</span>
+        <h2>One sans for voice. One sans for clarity. Mono for the machine.</h2>
+        <p class="lede">One family, three jobs. Inter handles every voice from 144px hero to 11px caption — hierarchy comes from size, weight, and tracking. Mono is reserved for timecodes, IDs, and metadata. Don't reach for a serif; the wordmark is sans, the system is sans. Company.</p>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <strong>Switzer · Display</strong><br/>
+          <span class="copy-line">var(--font-display)</span><br/>
+          weights 600 / 700<br/>
+          tracking -0.02em on 48px+<br/>
+          tracking: -0.02em on h1<br/>
+          for: titles, hero, page heads
+        </div>
+        <div class="specimen" style="font-family:var(--font-display);font-size:80px;line-height:1.05;letter-spacing:-0.025em;font-weight:700;">
+          Creativity travels.<br/><span style="color:var(--accent);">Meaning stays.</span>
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <strong>Switzer · Body & UI</strong><br/>
+          <span class="copy-line">var(--font-body)</span><br/>
+          weights 300/400/500/600/700<br/>
+          tracking: 0 (default)<br/>
+          for: paragraphs, buttons, labels, navigation
+        </div>
+        <div class="specimen" style="font-family:var(--font-body);font-size:17px;line-height:1.65;color:var(--fg-2);max-width:54ch;">
+          We help human creativity travel across languages, cultures, and formats without losing its meaning. Subtitles, dubbing, accessibility tracks, multi-platform delivery — orchestrated by AI agents grounded in long-form context, reviewed by the people who care most about the work.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <strong>JetBrains Mono</strong><br/>
+          <span class="copy-line">var(--font-mono)</span><br/>
+          weights 400/500/700<br/>
+          ligatures off (ss01, cv11)<br/>
+          for: timecodes, IDs, eyebrows, metadata
+        </div>
+        <div class="specimen" style="font-family:var(--font-mono);font-size:14px;line-height:1.6;color:var(--fg-2);">
+          wf_8XK2Q · 00:14:22:08 → 00:14:24:11<br/>
+          ko-KR · entity:0x84A · conf:0.94<br/>
+          BUILD MONITOR · 312 cues · 2.4 GB
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <strong>Pretendard Variable · KR</strong><br/>
+          <span class="copy-line">var(--font-cjk-kr)</span><br/>
+          for: Korean copy, with Switzer as Latin fallback
+        </div>
+        <div class="specimen" style="font-family:var(--font-cjk-kr);font-size:32px;line-height:1.3;letter-spacing:-0.005em;color:var(--fg);">
+          창작은 여행한다. <br/>
+          의미는 머문다.
+        </div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <strong>Noto Sans JP · JP</strong><br/>
+          <span class="copy-line">var(--font-cjk-jp)</span><br/>
+          for: Japanese copy
+        </div>
+        <div class="specimen" style="font-family:var(--font-cjk-jp);font-size:30px;line-height:1.4;color:var(--fg);">
+          創造性は旅をする。<br/>意味は留まる。
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCALE ============ -->
+    <section id="scale" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">03 · Type scale</span>
+        <h2>Ten steps. Use sparingly.</h2>
+        <p class="lede">Most pages need 3–4 sizes total. Mixing more produces noise. Default to <code>--fs-base</code> (15px) for body and step up for titles.</p>
+      </div>
+      <div class="scale-grid">
+        <div style="font-weight:600;color:var(--fg-2);">var</div>
+        <div style="font-weight:600;color:var(--fg-2);">specimen</div>
+        <div style="font-weight:600;color:var(--fg-2);">px</div>
+        <div style="font-weight:600;color:var(--fg-2);">role</div>
+      </div>
+      <div id="scaleRows" class="scale-grid" style="margin-top:8px;"></div>
+    </section>
+
+    <!-- ============ SPACING ============ -->
+    <section id="spacing" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">04 · Spacing</span>
+        <h2>4px base. Generous breathing room.</h2>
+        <p class="lede">Most components live in the 16–32px range. Use <code>--sp-12</code> (48px) and up for section breaks. We err on the side of more whitespace, not less.</p>
+      </div>
+      <div class="scale-grid" id="spacingRows"></div>
+    </section>
+
+    <!-- ============ RADII ============ -->
+    <section id="radii" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">05 · Radii</span>
+        <h2>10px is the signature.</h2>
+        <p class="lede">Derived from the proportion of the dot above the <em>i</em> in our wordmark. <code>--r-md</code> (10px) is the default for buttons, cards, inputs, and panels. <code>--r-full</code> (capsules) only for status dots and avatar shapes.</p>
+      </div>
+      <div class="radius-grid" id="radiiRows"></div>
+    </section>
+
+    <!-- ============ SHADOWS ============ -->
+    <section id="shadow" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">06 · Shadow</span>
+        <h2>Soft, warm-tinted, never blue.</h2>
+        <p class="lede">Shadows are warm-ink, low opacity, layered. Use <code>--shadow-xs</code> on resting cards, <code>--shadow-md</code> on hover. Anything heavier is for modals.</p>
+      </div>
+      <div class="shadow-grid" id="shadowRows" style="background:var(--ink-50);border-radius:var(--r-md);"></div>
+    </section>
+
+    <!-- ============ MOTION ============ -->
+    <section id="motion" class="kit-section">
+      <div class="kit-section-head">
+        <span class="t-eyebrow">07 · Motion</span>
+        <h2>Restrained, intentional, scroll-triggered.</h2>
+        <p class="lede">One easing curve does almost all the work. Three durations cover the rest. No autoplay. No loops. Motion narrates user action, never demands attention.</p>
+      </div>
+      <div class="ease-card">
+        <div class="ball"></div>
+        <div class="info">
+          <strong>Signature easing</strong>
+          <div class="meta">var(--ease) · cubic-bezier(0.32, 0.72, 0, 1)</div>
+        </div>
+      </div>
+      <div class="legend" style="margin-top:14px;">
+        <div class="legend-row" style="grid-template-columns: 100px 1fr 200px;">
+          <span class="name">--d-fast</span><span>140ms · hover, focus, color shift</span><span class="hex">UI feedback</span>
+        </div>
+        <div class="legend-row" style="grid-template-columns: 100px 1fr 200px;">
+          <span class="name">--d-base</span><span>220ms · enter/leave, modal, transform</span><span class="hex">Default for layout</span>
+        </div>
+        <div class="legend-row" style="grid-template-columns: 100px 1fr 200px;">
+          <span class="name">--d-slow</span><span>420ms · hero entry, scroll-triggered reveal</span><span class="hex">Storytelling only</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+// Build amber + ink swatch rows from CSS vars
+const css = getComputedStyle(document.documentElement);
+const buildScale = (name, sel, signature) => {
+  const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900].concat(name === 'ink' ? [950] : []);
+  const html = steps.map(step => {
+    const v = css.getPropertyValue(`--${name}-${step}`).trim();
+    const fg = step >= 500 ? '#fff' : 'var(--ink-950)';
+    const sig = step === signature ? ' signature' : '';
+    return `<div class="swatch${sig}" style="background:${v};color:${fg}">
+      <div class="step">${step}</div>
+      <div class="hex">${v.replace('oklch(', '').replace(')', '')}</div>
+    </div>`;
+  }).join('');
+  // pad to 11 columns for ink (50..950 = 11 swatches)
+  document.querySelector(sel).innerHTML = html;
+};
+buildScale('amber', '#amberRow', 500);
+buildScale('ink', '#inkRow', null);
+
+// Pad amber row to 11 columns visually (it's only 10) — leave the last cell empty
+document.getElementById('amberRow').innerHTML += '<div></div>';
+
+// Semantic
+const sem = [
+  ['success', 'Completed states, success toasts, healthy metrics'],
+  ['warning', 'Awaiting action, soft caution'],
+  ['danger',  'Failed runs, destructive confirms, errors'],
+  ['info',    'Running states, neutral notices'],
+];
+document.getElementById('semantic').innerHTML = sem.map(([n, use]) => {
+  const v = css.getPropertyValue(`--${n}`).trim();
+  return `<div class="legend-row">
+    <span class="chip" style="background:${v}"></span>
+    <span class="name">--${n}</span>
+    <span class="hex">${v}</span>
+    <span class="oklch">paired with --${n}-bg</span>
+    <span class="var" style="font-family:var(--font-body);">${use}</span>
+  </div>`;
+}).join('');
+
+// Roles
+const roles = [
+  ['accent',  'Primary CTAs, focus rings, brand emphasis'],
+  ['fg',      'Primary text on light bg'],
+  ['fg-2',    'Body copy, secondary text'],
+  ['fg-3',    'Captions, metadata, eyebrows'],
+  ['border',  'Default 1px hairline'],
+  ['surface', 'Cards, panels, elevated content'],
+  ['bg',      'Page background'],
+];
+document.getElementById('roles').innerHTML = roles.map(([n, use]) => {
+  const v = css.getPropertyValue(`--${n}`).trim();
+  return `<div class="legend-row">
+    <span class="chip" style="background:var(--${n})"></span>
+    <span class="name">--${n}</span>
+    <span class="hex">${v}</span>
+    <span class="oklch">→ resolved</span>
+    <span class="var" style="font-family:var(--font-body);">${use}</span>
+  </div>`;
+}).join('');
+
+// Type scale rows
+const scale = [
+  ['xs', 12, 'Captions, eyebrows, mono labels'],
+  ['sm', 13, 'Dense table cells, secondary nav'],
+  ['base', 15, '⭐ Default body'],
+  ['md', 17, 'Lead paragraphs, hero subheadlines'],
+  ['lg', 20, 'Card titles, section heads'],
+  ['xl', 24, 'h3, page heads'],
+  ['2xl', 32, 'h2'],
+  ['3xl', 44, 'h1'],
+  ['4xl', 60, 'Display'],
+  ['5xl', 80, 'Hero display (capped at clamp)'],
+];
+document.getElementById('scaleRows').innerHTML = scale.map(([n, px, use]) => {
+  return `<div style="font-family:var(--font-mono);color:var(--fg-2);">--fs-${n}</div>
+    <div style="font-family: var(--font-display); font-weight: 700;color:var(--fg);font-size:${px}px;line-height:1;letter-spacing:-0.01em;">The amber dot stays.</div>
+    <div style="font-family:var(--font-mono);color:var(--fg-3);">${px}px</div>
+    <div style="font-family:var(--font-body);font-size:11px;color:var(--fg-3);">${use}</div>`;
+}).join('');
+
+// Spacing rows
+const sp = [
+  ['1', 4], ['2', 8], ['3', 12], ['4', 16], ['5', 20], ['6', 24],
+  ['8', 32], ['10', 40], ['12', 48], ['16', 64], ['20', 80], ['24', 96],
+];
+document.getElementById('spacingRows').innerHTML = sp.map(([n, px]) => {
+  return `<div style="font-family:var(--font-mono);color:var(--fg-2);">--sp-${n}</div>
+    <div><div style="height:14px;width:${px}px;max-width:100%;background:var(--accent);border-radius:2px;"></div></div>
+    <div style="font-family:var(--font-mono);color:var(--fg-3);">${px}px</div>
+    <div></div>`;
+}).join('');
+
+// Radii rows
+const radii = [['xs', 4], ['sm', 6], ['md', 10], ['lg', 14], ['xl', 20], ['full', '99']];
+document.getElementById('radiiRows').innerHTML = radii.map(([n, px]) => {
+  const r = n === 'full' ? '50%' : px + 'px';
+  const star = n === 'md' ? ' ⭐' : '';
+  return `<div class="radius-card" style="border-radius:${r};">
+    <strong style="font-family:var(--font-body);font-size:13px;color:var(--fg);">--r-${n}${star}</strong>
+    <div>${typeof px === 'number' ? px + 'px' : 'capsule'}</div>
+  </div>`;
+}).join('');
+
+// Shadow rows
+const shadows = [
+  ['xs', 'Resting cards, list rows'],
+  ['sm', 'Hover lift, slight elevation'],
+  ['md', 'Floating panels, pop overs'],
+  ['lg', 'Modals, dialogs'],
+  ['glow', 'Focus ring on primary inputs'],
+];
+document.getElementById('shadowRows').innerHTML = shadows.map(([n, use]) => {
+  return `<div class="shadow-card" style="box-shadow: var(--shadow-${n});">
+    <div class="name">--shadow-${n}</div>
+    <div style="font-family:var(--font-body);font-size:11px;color:var(--fg-3);text-align:center;">${use}</div>
+  </div>`;
+}).join('');
+</script>
+</body>
+</html>

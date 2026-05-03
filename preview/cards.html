@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Cards</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body{margin:0;padding:20px;background:var(--bg-sunk);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:16px;box-shadow:var(--shadow-sm)}
+  .card.hover{border-color:var(--border-strong);box-shadow:var(--shadow-md)}
+  .row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .ttl{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--fg);margin:0}
+  .meta{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);margin-top:4px}
+  .pill{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:var(--r-md);background:var(--amber-50);color:var(--amber-900);border:1px solid var(--amber-200)}
+  .body{margin-top:10px;color:var(--fg-2);font-size:13px;line-height:1.5}
+  .lbl{font-family:var(--font-mono);font-size:9px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.1em;position:absolute;top:6px;right:10px}
+  .wrap{position:relative}
+</style></head>
+<body class="ds-root">
+  <div class="wrap"><span class="lbl">REST</span><div class="card">
+    <div class="row"><h3 class="ttl">Squid Game · S03E04</h3><span class="pill">CMG v2</span></div>
+    <div class="meta">workflow_8XK2Q · 12m ago</div>
+    <p class="body">16 agents complete. Bible synthesized, episodic timeline ready for review.</p>
+  </div></div>
+  <div class="wrap"><span class="lbl">HOVER</span><div class="card hover">
+    <div class="row"><h3 class="ttl">Parasite · S01E08</h3><span class="pill">CMG v2</span></div>
+    <div class="meta">workflow_4QZ81 · just now</div>
+    <p class="body">Phase 2 in progress · episodic_meta agent running.</p>
+  </div></div>
+</body></html>

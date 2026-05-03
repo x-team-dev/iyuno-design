@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Components · Iyuno Reference Kit</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<link rel="stylesheet" href="kit.css"/>
+<style>
+  .comp { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; margin-bottom: 32px; }
+  @media (max-width: 920px) { .comp { grid-template-columns: 1fr; } }
+  .stage {
+    background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 32px; min-height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    background-image: linear-gradient(45deg, oklch(0.95 0.005 80) 25%, transparent 25%, transparent 75%, oklch(0.95 0.005 80) 75%),
+                      linear-gradient(45deg, oklch(0.95 0.005 80) 25%, transparent 25%, transparent 75%, oklch(0.95 0.005 80) 75%);
+    background-size: 16px 16px; background-position: 0 0, 8px 8px;
+  }
+  .stage > .surface { background: #fff; border-radius: var(--r-md); padding: 20px; box-shadow: var(--shadow-xs); width: 100%; max-width: 360px; }
+
+  pre.code {
+    background: var(--ink-950); color: var(--ink-100);
+    padding: 18px; margin: 0; border-radius: var(--r-md);
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.6;
+    overflow-x: auto; white-space: pre; position: relative;
+    border: 1px solid var(--ink-900);
+  }
+  pre.code .tk-tag { color: oklch(0.78 0.10 230); }
+  pre.code .tk-attr { color: oklch(0.85 0.13 78); }
+  pre.code .tk-str { color: oklch(0.85 0.10 145); }
+  pre.code .tk-com { color: oklch(0.55 0.01 80); }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--ink-800); color: var(--ink-100); border: 0;
+    border-radius: var(--r-sm); padding: 4px 10px;
+    font-family: var(--font-mono); font-size: 10px; cursor: pointer;
+    transition: all var(--d-fast) var(--ease);
+  }
+  .copy-btn:hover { background: var(--accent); color: var(--ink-950); }
+
+  .comp-meta {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px;
+    padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .comp-meta:first-child { padding-top: 0; border-top: 0; }
+  .comp-meta h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 22px;
+    margin: 0; letter-spacing: -0.01em;
+  }
+  .comp-meta .tokens {
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+    letter-spacing: 0.05em;
+  }
+  .comp-note { font-size: 13px; color: var(--fg-2); margin: 0 0 14px; max-width: 60ch; line-height: 1.55; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 6px; }
+  .tab-btn {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em;
+    padding: 4px 10px; border: 1px solid var(--border-strong); background: var(--bg-elev);
+    color: var(--fg-2); cursor: pointer; border-radius: var(--r-sm);
+  }
+  .tab-btn.on { background: var(--ink-950); color: var(--ink-50); border-color: var(--ink-950); }
+
+  /* Component CSS — match the design system */
+  .iy-btn { font-family: var(--font-body); font-weight: 600; font-size: 13px; padding: 8px 14px; border-radius: var(--r-md); border: 1px solid transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all var(--d-fast) var(--ease); }
+  .iy-btn-primary { background: var(--accent); color: var(--accent-fg); }
+  .iy-btn-primary:hover { background: oklch(0.745 0.165 72); }
+  .iy-btn-secondary { background: #fff; color: var(--fg); border-color: var(--border-strong); }
+  .iy-btn-secondary:hover { background: var(--ink-100); }
+  .iy-btn-ghost { background: transparent; color: var(--fg-2); }
+  .iy-btn-ghost:hover { background: var(--ink-100); }
+  .iy-btn-danger { background: var(--danger); color: #fff; }
+
+  .iy-input {
+    width: 100%; padding: 9px 12px; font-size: 14px; font-family: var(--font-body);
+    border-radius: var(--r-md); border: 1px solid var(--border-strong); background: #fff; color: var(--fg);
+    transition: all var(--d-fast) var(--ease); outline: none;
+  }
+  .iy-input:focus { border-color: var(--accent); box-shadow: var(--shadow-glow); }
+  .iy-label { display: block; font-family: var(--font-body); font-weight: 500; font-size: 13px; color: var(--fg); margin-bottom: 6px; }
+  .iy-help { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 4px; }
+
+  .iy-card { background: #fff; border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px; box-shadow: var(--shadow-xs); }
+  .iy-card-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; margin: 0 0 8px; color: var(--fg); }
+  .iy-card-body { font-size: 13px; color: var(--fg-2); line-height: 1.6; margin: 0; }
+  .iy-card-eyebrow { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg-3); margin-bottom: 6px; }
+
+  .iy-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 12px; font-weight: 500; padding: 3px 9px; border-radius: var(--r-md); border: 1px solid; }
+  .iy-badge .iy-dot { width: 6px; height: 6px; border-radius: 99px; }
+  .iy-badge-success { background: var(--success-bg); color: var(--success); border-color: oklch(0.85 0.05 145); }
+  .iy-badge-warning { background: var(--warning-bg); color: oklch(0.45 0.13 70); border-color: oklch(0.85 0.07 70); }
+  .iy-badge-danger { background: var(--danger-bg); color: var(--danger); border-color: oklch(0.85 0.06 25); }
+  .iy-badge-info { background: var(--info-bg); color: var(--info); border-color: oklch(0.85 0.05 230); }
+  .iy-badge-amber { background: var(--amber-50); color: var(--amber-900); border-color: var(--amber-200); }
+  .iy-badge-neutral { background: var(--ink-100); color: var(--fg-2); border-color: var(--border-strong); }
+
+  .iy-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .iy-tab { padding: 10px 16px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--fg-3); border-bottom: 2px solid transparent; cursor: pointer; margin-bottom: -1px; transition: all var(--d-fast) var(--ease); }
+  .iy-tab.on { color: var(--fg); border-bottom-color: var(--accent); }
+  .iy-tab:hover { color: var(--fg); }
+
+  .iy-toast {
+    background: var(--ink-950); color: var(--ink-50); border-radius: var(--r-md);
+    padding: 12px 16px; box-shadow: var(--shadow-lg);
+    display: flex; gap: 10px; align-items: center; min-width: 280px;
+  }
+  .iy-toast .iy-toast-icon { width: 18px; height: 18px; border-radius: 99px; background: var(--accent); flex-shrink: 0; }
+  .iy-toast .iy-toast-content { flex: 1; font-size: 13px; line-height: 1.4; }
+  .iy-toast .iy-toast-content small { color: var(--ink-300); display: block; font-size: 11px; margin-top: 2px; }
+
+  .iy-dialog { background: #fff; border-radius: var(--r-md); box-shadow: var(--shadow-lg); max-width: 420px; width: 100%; overflow: hidden; }
+  .iy-dialog-head { padding: 24px 24px 0; }
+  .iy-dialog-title { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -0.01em; margin: 0 0 6px; color: var(--fg); }
+  .iy-dialog-desc { font-size: 14px; color: var(--fg-2); margin: 0; line-height: 1.55; }
+  .iy-dialog-body { padding: 16px 24px; }
+  .iy-dialog-foot { padding: 14px 20px; background: var(--ink-50); display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid var(--border); }
+
+  .iy-pricing { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .iy-tier { background: #fff; border: 1px solid var(--border); border-radius: var(--r-md); padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .iy-tier.featured { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .iy-tier-name { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-3); }
+  .iy-tier-price { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.01em; color: var(--fg); }
+  .iy-tier-price small { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); margin-left: 6px; font-weight: 400; }
+  .iy-tier-feat { font-size: 11px; color: var(--fg-2); display: flex; align-items: center; gap: 6px; }
+  .iy-tier-feat::before { content: ''; width: 4px; height: 4px; border-radius: 99px; background: var(--accent); flex-shrink: 0; }
+
+  .iy-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: #fff; border: 1px solid var(--border); border-radius: var(--r-md); }
+  .iy-nav-links { display: flex; gap: 4px; }
+  .iy-nav-link { padding: 6px 12px; border-radius: var(--r-sm); font-size: 13px; color: var(--fg-2); cursor: pointer; }
+  .iy-nav-link:hover, .iy-nav-link.on { background: var(--ink-100); color: var(--fg); }
+</style>
+</head>
+<body class="ds-root">
+<header class="kit-head">
+  <div class="kit-head-inner">
+    <a href="index.html" class="kit-brand"><img src="../assets/iyuno-logo.svg" alt="Iyuno" height="22"/><span class="kit-eyebrow">REFERENCE KIT · COMPONENTS</span></a>
+    <nav class="kit-nav">
+      <a href="tokens.html">Tokens</a>
+      <a href="components.html" class="active">Components</a>
+      <a href="brand.html">Brand</a>
+      <a href="../templates/deck.html">Deck</a>
+      <a href="../templates/one-pager.html">One-pager</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-rail">
+  <aside class="rail">
+    <div class="rail-section">
+      <h4>Components</h4>
+      <a href="#button">Button</a>
+      <a href="#input">Input</a>
+      <a href="#card">Card</a>
+      <a href="#badge">Badge</a>
+      <a href="#nav">Nav / Header</a>
+      <a href="#tabs">Tabs</a>
+      <a href="#dialog">Dialog</a>
+      <a href="#toast">Toast</a>
+      <a href="#pricing">Pricing tier</a>
+    </div>
+    <div class="rail-section">
+      <h4>Usage</h4>
+      <p style="font-family:var(--font-body);font-size:12px;line-height:1.6;color:var(--fg-2);margin:0;">
+        All snippets assume <code>colors_and_type.css</code> is loaded. Tailwind variant uses the JIT class names; React variant is plain JSX with a <code>cn()</code> helper.
+      </p>
+    </div>
+  </aside>
+
+  <main>
+    <div class="kit-section-head" style="margin-bottom: 40px;">
+      <span class="t-eyebrow">Component Gallery</span>
+      <h2>Each one preview, tokens, snippet.</h2>
+      <p class="lede">Click "TSX" or "Tailwind" or "CSS" to switch the snippet. Click the copy badge to grab it. Tokens listed under each component name.</p>
+    </div>
+
+    <!-- BUTTON -->
+    <section id="button" class="kit-section">
+      <div class="comp-meta">
+        <h3>Button</h3>
+        <span class="tokens">--accent · --r-md · --d-fast · --shadow-glow</span>
+      </div>
+      <p class="comp-note">Primary CTAs use amber. Secondary buttons sit on a hairline border. Ghost for inline tertiary actions. Never put two primary buttons side by side — pick one hero action.</p>
+      <div class="comp">
+        <div class="stage">
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+            <button class="iy-btn iy-btn-primary">Start a build</button>
+            <button class="iy-btn iy-btn-secondary">Cancel</button>
+            <button class="iy-btn iy-btn-ghost">Skip</button>
+            <button class="iy-btn iy-btn-danger">Delete run</button>
+          </div>
+        </div>
+        <div data-snippet="button"></div>
+      </div>
+    </section>
+
+    <!-- INPUT -->
+    <section id="input" class="kit-section">
+      <div class="comp-meta">
+        <h3>Input</h3>
+        <span class="tokens">--border-strong · --r-md · --shadow-glow on focus</span>
+      </div>
+      <p class="comp-note">Single-line text inputs. Focus ring is amber, not blue. Help text uses mono to mark it as system metadata.</p>
+      <div class="comp">
+        <div class="stage">
+          <div style="width:100%;max-width:320px;">
+            <label class="iy-label" for="iEmail">Work email</label>
+            <input id="iEmail" class="iy-input" placeholder="you@iyuno.com" value="jiwon@iyuno.com"/>
+            <div class="iy-help">We'll send a magic link.</div>
+          </div>
+        </div>
+        <div data-snippet="input"></div>
+      </div>
+    </section>
+
+    <!-- CARD -->
+    <section id="card" class="kit-section">
+      <div class="comp-meta">
+        <h3>Card</h3>
+        <span class="tokens">--surface · --r-md · --shadow-xs · --border</span>
+      </div>
+      <p class="comp-note">A surface for grouped content. White background, hairline border, shadow-xs at rest, shadow-sm on hover. Eyebrow + display title is the canonical pattern.</p>
+      <div class="comp">
+        <div class="stage">
+          <div class="iy-card" style="max-width:320px;">
+            <div class="iy-card-eyebrow">CONTEXTUAL MEMORY GRAPH</div>
+            <h3 class="iy-card-title">Squid Game · S03E04</h3>
+            <p class="iy-card-body">Default v2 · 312 cues · 4 locales. Last build completed two minutes ago.</p>
+          </div>
+        </div>
+        <div data-snippet="card"></div>
+      </div>
+    </section>
+
+    <!-- BADGE -->
+    <section id="badge" class="kit-section">
+      <div class="comp-meta">
+        <h3>Badge</h3>
+        <span class="tokens">semantic --*-bg pairs · --r-md · 12px</span>
+      </div>
+      <p class="comp-note">Status pills with a dot prefix. Six variants cover everything we've shipped. Amber means awaiting review (a soft, important "your turn"). Neutral is the catch-all.</p>
+      <div class="comp">
+        <div class="stage">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span class="iy-badge iy-badge-success"><span class="iy-dot" style="background:var(--success)"></span>Completed</span>
+            <span class="iy-badge iy-badge-info"><span class="iy-dot" style="background:var(--info)"></span>Running</span>
+            <span class="iy-badge iy-badge-amber"><span class="iy-dot" style="background:var(--accent)"></span>Awaiting review</span>
+            <span class="iy-badge iy-badge-warning"><span class="iy-dot" style="background:oklch(0.65 0.13 70)"></span>Paused</span>
+            <span class="iy-badge iy-badge-danger"><span class="iy-dot" style="background:var(--danger)"></span>Failed</span>
+            <span class="iy-badge iy-badge-neutral"><span class="iy-dot" style="background:var(--ink-500)"></span>Pending</span>
+          </div>
+        </div>
+        <div data-snippet="badge"></div>
+      </div>
+    </section>
+
+    <!-- NAV -->
+    <section id="nav" class="kit-section">
+      <div class="comp-meta">
+        <h3>Nav / Header</h3>
+        <span class="tokens">--surface · --border · --r-md</span>
+      </div>
+      <p class="comp-note">Top-of-page navigation. Logo on the left, link group in the middle or right, primary CTA flush right. Backdrop-blur on scroll if the page has imagery.</p>
+      <div class="comp">
+        <div class="stage" style="padding:16px;">
+          <div class="iy-nav" style="width:100%;">
+            <img src="../assets/iyuno-logo.svg" height="20" alt="Iyuno"/>
+            <div class="iy-nav-links">
+              <span class="iy-nav-link on">Products</span>
+              <span class="iy-nav-link">Customers</span>
+              <span class="iy-nav-link">Approach</span>
+              <span class="iy-nav-link">Company</span>
+            </div>
+            <button class="iy-btn iy-btn-primary">Talk to us</button>
+          </div>
+        </div>
+        <div data-snippet="nav"></div>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <section id="tabs" class="kit-section">
+      <div class="comp-meta">
+        <h3>Tabs</h3>
+        <span class="tokens">--border bottom · --accent active · --d-fast</span>
+      </div>
+      <p class="comp-note">Section switcher inside a panel. Active tab carries the amber underline. Use sparingly — never with more than five tabs.</p>
+      <div class="comp">
+        <div class="stage">
+          <div style="background:#fff;padding:0 18px 18px;border-radius:var(--r-md);width:100%;max-width:380px;border:1px solid var(--border);">
+            <div class="iy-tabs">
+              <span class="iy-tab on">Pipeline</span>
+              <span class="iy-tab">Run details</span>
+              <span class="iy-tab">Outputs</span>
+              <span class="iy-tab">Logs</span>
+            </div>
+            <p style="font-family:var(--font-body);font-size:13px;color:var(--fg-2);margin:0;line-height:1.6;">
+              Pipeline is rendering. Eight sensory agents complete; three memory agents in flight.
+            </p>
+          </div>
+        </div>
+        <div data-snippet="tabs"></div>
+      </div>
+    </section>
+
+    <!-- DIALOG -->
+    <section id="dialog" class="kit-section">
+      <div class="comp-meta">
+        <h3>Dialog</h3>
+        <span class="tokens">--surface · --shadow-lg · --r-md · footer surface-2</span>
+      </div>
+      <p class="comp-note">Modal confirmation. Title and body both Switzer. Footer sits on a sunk surface to anchor actions visually.</p>
+      <div class="comp">
+        <div class="stage">
+          <div class="iy-dialog">
+            <div class="iy-dialog-head">
+              <h3 class="iy-dialog-title">Approve this build?</h3>
+              <p class="iy-dialog-desc">Approving sends 312 cues across 4 locales to the client delivery folder. This cannot be undone from CLOE — you'd need to file a re-run ticket.</p>
+            </div>
+            <div class="iy-dialog-body"></div>
+            <div class="iy-dialog-foot">
+              <button class="iy-btn iy-btn-secondary">Cancel</button>
+              <button class="iy-btn iy-btn-primary">Approve and deliver</button>
+            </div>
+          </div>
+        </div>
+        <div data-snippet="dialog"></div>
+      </div>
+    </section>
+
+    <!-- TOAST -->
+    <section id="toast" class="kit-section">
+      <div class="comp-meta">
+        <h3>Toast</h3>
+        <span class="tokens">--ink-950 surface · --shadow-lg · 4s auto-dismiss</span>
+      </div>
+      <p class="comp-note">Inverted dark surface so it floats above any page. Always pair a status indicator with a one-line message; reserve a small line for context.</p>
+      <div class="comp">
+        <div class="stage">
+          <div class="iy-toast">
+            <div class="iy-toast-icon"></div>
+            <div class="iy-toast-content">
+              <div>Build started for <strong>Squid Game · S03E04</strong>.</div>
+              <small>wf_8XK2Q · estimated 4 min</small>
+            </div>
+          </div>
+        </div>
+        <div data-snippet="toast"></div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="kit-section">
+      <div class="comp-meta">
+        <h3>Pricing tier</h3>
+        <span class="tokens">--surface · --accent ring on featured · --r-md</span>
+      </div>
+      <p class="comp-note">Three-tier card row. Featured tier carries an amber ring (using shadow as offset glow), not a heavy color block. Keep features to 4–5 per card.</p>
+      <div class="comp">
+        <div class="stage">
+          <div class="iy-pricing" style="width:100%;">
+            <div class="iy-tier">
+              <div class="iy-tier-name">Studio</div>
+              <div class="iy-tier-price">$24<small>/mo</small></div>
+              <div class="iy-tier-feat">Up to 200 minutes</div>
+              <div class="iy-tier-feat">2 target locales</div>
+              <div class="iy-tier-feat">Email support</div>
+            </div>
+            <div class="iy-tier featured">
+              <div class="iy-tier-name">Network</div>
+              <div class="iy-tier-price">$480<small>/mo</small></div>
+              <div class="iy-tier-feat">10,000 minutes</div>
+              <div class="iy-tier-feat">All locales</div>
+              <div class="iy-tier-feat">CMG Editor</div>
+              <div class="iy-tier-feat">Priority support</div>
+            </div>
+            <div class="iy-tier">
+              <div class="iy-tier-name">Enterprise</div>
+              <div class="iy-tier-price" style="font-size:22px;line-height:1.4;">Custom</div>
+              <div class="iy-tier-feat">Unlimited</div>
+              <div class="iy-tier-feat">SSO / SOC2</div>
+              <div class="iy-tier-feat">Dedicated MSX channel</div>
+            </div>
+          </div>
+        </div>
+        <div data-snippet="pricing"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="components-snippets.js"></script>
+<script>
+  // Wire up snippet panels
+  document.querySelectorAll('[data-snippet]').forEach(el => {
+    const key = el.dataset.snippet;
+    const data = window.IY_SNIPPETS[key];
+    if (!data) return;
+    const formats = Object.keys(data);
+    let active = formats[0];
+    const render = () => {
+      el.innerHTML = `
+        <div class="tabs">
+          ${formats.map(f => `<button class="tab-btn ${f===active?'on':''}" data-fmt="${f}">${f.toUpperCase()}</button>`).join('')}
+        </div>
+        <pre class="code"><button class="copy-btn" data-copy>COPY</button>${data[active]}</pre>
+      `;
+      el.querySelectorAll('.tab-btn').forEach(b => {
+        b.onclick = () => { active = b.dataset.fmt; render(); };
+      });
+      const copyBtn = el.querySelector('[data-copy]');
+      copyBtn.onclick = () => {
+        const txt = el.querySelector('pre').textContent.replace('COPY', '');
+        navigator.clipboard.writeText(txt.trim());
+        copyBtn.textContent = 'COPIED';
+        setTimeout(() => copyBtn.textContent = 'COPY', 1400);
+      };
+    };
+    render();
+  });
+</script>
+</body>
+</html>

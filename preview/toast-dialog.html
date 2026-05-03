@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Toast / Dialog</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body{margin:0;padding:20px;background:var(--bg-sunk);display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .toast{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;box-shadow:var(--shadow-md);display:flex;gap:10px;align-items:flex-start}
+  .toast .ico{width:8px;height:8px;border-radius:99px;background:var(--success);margin-top:6px;flex-shrink:0}
+  .ttl{font-family:var(--font-body);font-weight:600;font-size:13px;color:var(--fg);margin:0}
+  .body{font-family:var(--font-body);font-size:12px;color:var(--fg-2);margin:2px 0 0;line-height:1.5}
+  .dialog{background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:18px;box-shadow:var(--shadow-lg)}
+  .dttl{font-family:var(--font-display);font-weight:400;font-size:20px;color:var(--fg);margin:0 0 4px}
+  .row{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+  .btn{font-family:var(--font-body);font-weight:600;font-size:13px;padding:8px 14px;border-radius:var(--r-md);border:1px solid transparent;cursor:pointer}
+  .b-pri{background:var(--accent);color:var(--accent-fg)}
+  .b-sec{background:#fff;color:var(--fg);border-color:var(--border-strong)}
+</style></head>
+<body class="ds-root">
+  <div class="toast">
+    <div class="ico"></div>
+    <div><p class="ttl">Build complete</p><p class="body">Squid Game · S03E04 — 4 outputs ready for review.</p></div>
+  </div>
+  <div class="dialog">
+    <h3 class="dttl">Delete this template?</h3>
+    <p class="body">Webtoon · v2 · used by 12 active workflows. This cannot be undone.</p>
+    <div class="row"><button class="btn b-sec">Cancel</button><button class="btn b-pri">Delete</button></div>
+  </div>
+</body></html>

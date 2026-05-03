@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Radii</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>body{margin:0;padding:20px;background:var(--bg)} .row{display:flex;gap:14px;align-items:flex-end} .item{display:flex;flex-direction:column;gap:6px;align-items:center} .box{width:80px;height:80px;background:var(--bg-elev);border:1px solid var(--border);box-shadow:var(--shadow-sm)} .star{position:absolute;top:6px;right:8px;font-size:10px;color:var(--accent)} .lbl{font-family:var(--font-mono);font-size:11px;color:var(--fg-2)} .val{font-family:var(--font-mono);font-size:10px;color:var(--fg-3)}</style></head>
+<body class="ds-root">
+  <div class="row">
+    <div class="item"><div class="box" style="border-radius:var(--r-xs); position:relative"></div><span class="lbl">xs</span><span class="val">4px</span></div>
+    <div class="item"><div class="box" style="border-radius:var(--r-sm); position:relative"></div><span class="lbl">sm</span><span class="val">6px</span></div>
+    <div class="item"><div class="box" style="border-radius:var(--r-md); position:relative; outline:2px solid var(--accent); outline-offset:2px"></div><span class="lbl">md ★</span><span class="val">10px</span></div>
+    <div class="item"><div class="box" style="border-radius:var(--r-lg); position:relative"></div><span class="lbl">lg</span><span class="val">14px</span></div>
+    <div class="item"><div class="box" style="border-radius:var(--r-xl); position:relative"></div><span class="lbl">xl</span><span class="val">20px</span></div>
+    <div class="item"><div class="box" style="border-radius:var(--r-full); position:relative"></div><span class="lbl">full</span><span class="val">9999</span></div>
+  </div>
+</body></html>

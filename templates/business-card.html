@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Iyuno · Business Card</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  html, body { margin: 0; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
+  .stage {
+    min-height: 100vh; padding: 64px 32px;
+    display: flex; flex-direction: column; align-items: center; gap: 48px;
+  }
+
+  .lede {
+    width: 100%; max-width: 880px;
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 24px;
+  }
+  .lede h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 28px; letter-spacing: -0.02em; margin: 0;
+  }
+  .lede .meta {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* Standard US business card: 3.5" × 2" → 336 × 192 px @ 96dpi.
+     Render at 2× (672×384) for screen sharpness; print CSS scales back. */
+  .pair {
+    display: grid; grid-template-columns: repeat(2, 672px); gap: 32px;
+    width: max-content;
+  }
+  .card {
+    width: 672px; height: 384px;
+    border-radius: 14px;
+    box-shadow: 0 30px 60px -20px oklch(0.20 0.02 80 / 0.30), 0 0 0 1px var(--border);
+    position: relative; overflow: hidden;
+    box-sizing: border-box;
+  }
+  .card-label {
+    text-align: center; font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3);
+    margin-top: 12px;
+  }
+
+  /* ───────── FRONT ───────── */
+  .front {
+    background: var(--bg);
+    padding: 48px 56px;
+    display: grid; grid-template-rows: auto 1fr auto;
+    color: var(--fg);
+  }
+  .front-top { display: flex; justify-content: space-between; align-items: center; }
+  .front-top img { height: 28px; }
+  .front-top .product {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .front-mid {
+    align-self: center;
+  }
+  .front-name {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 36px; letter-spacing: -0.02em; line-height: 1.05;
+    margin: 0 0 6px;
+  }
+  .front-name em { font-style: normal; color: var(--accent); font-weight: 700; }
+  .front-role {
+    font-family: var(--font-body); font-size: 14px; color: var(--fg-2);
+    margin: 0; letter-spacing: -0.005em;
+  }
+  .front-bottom {
+    display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 16px;
+  }
+  .front-contact {
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg-2);
+    letter-spacing: 0.02em; line-height: 1.7;
+  }
+  .front-contact .label {
+    color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 9px; display: inline-block; width: 18px;
+  }
+  .front-mark {
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); border-radius: 12px;
+  }
+  .front-mark img { width: 22px; height: 22px; }
+
+  /* ───────── BACK (dark, signature side) ───────── */
+  .back {
+    background: var(--ink-950);
+    color: var(--ink-50);
+    --fg: var(--ink-50);
+    --fg-2: var(--ink-200);
+    --fg-3: var(--ink-400);
+    padding: 56px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .back::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--accent);
+  }
+  .back-mark {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .back-mark img { height: 32px; }
+  .back-mark .div {
+    width: 1px; height: 28px; background: oklch(1 0 0 / 0.18);
+  }
+  .back-mark .tag {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-300);
+  }
+  .back-statement {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 38px; line-height: 1.1; letter-spacing: -0.02em;
+    margin: 0; max-width: 16ch;
+  }
+  .back-statement em { font-style: normal; color: var(--accent); }
+  .back-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-400);
+  }
+  .back-foot .url { color: var(--accent); }
+
+  /* ───────── Variants gallery ───────── */
+  .variants {
+    width: 100%; max-width: 880px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .variants h2 {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3);
+    margin: 8px 0 4px; font-weight: 500;
+  }
+  .variant-row {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  }
+  .variant {
+    border-radius: 10px;
+    box-shadow: 0 8px 20px -10px oklch(0.20 0.02 80 / 0.20), 0 0 0 1px var(--border);
+    aspect-ratio: 7 / 4;
+    padding: 24px 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow: hidden; position: relative;
+  }
+  .variant.amber { background: var(--accent); color: var(--amber-900); }
+  .variant.amber .nm { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; margin: 0; }
+  .variant.amber .role { font-size: 12px; opacity: 0.75; margin: 2px 0 0; }
+  .variant.amber img { height: 18px; }
+  .variant.amber .ctc { font-family: var(--font-mono); font-size: 10px; line-height: 1.6; letter-spacing: 0.02em; }
+
+  .variant.warm { background: var(--ink-100); color: var(--fg); }
+  .variant.warm img { height: 18px; }
+  .variant.warm .nm { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 0; letter-spacing: -0.02em; }
+  .variant.warm .role { font-size: 12px; color: var(--fg-2); margin: 2px 0 0; }
+  .variant.warm .ctc { font-family: var(--font-mono); font-size: 10px; color: var(--fg-2); line-height: 1.6; }
+
+  /* Specs */
+  .specs {
+    width: 100%; max-width: 880px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 20px 24px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .spec h3 {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--fg-3); margin: 0 0 6px; font-weight: 500;
+  }
+  .spec p {
+    font-size: 12px; line-height: 1.5; color: var(--fg);
+    margin: 0;
+  }
+  .spec code {
+    font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+  }
+
+  @media print {
+    @page { size: 3.5in 2in; margin: 0; }
+    html, body { background: #fff; }
+    .stage { padding: 0; gap: 0; }
+    .lede, .variants, .specs, .card-label { display: none; }
+    .pair { display: block; gap: 0; }
+    .card { width: 3.5in; height: 2in; box-shadow: none; border-radius: 0; page-break-after: always; }
+    .front { padding: 0.32in 0.4in; }
+    .front-name { font-size: 24px; }
+    .front-role { font-size: 10px; }
+    .front-top img { height: 18px; }
+    .front-contact { font-size: 8px; }
+    .back { padding: 0.32in 0.4in; }
+    .back-statement { font-size: 22px; }
+    .back-mark img { height: 22px; }
+    .back-foot { font-size: 7px; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="lede">
+    <h1>Business card</h1>
+    <span class="meta">3.5″ × 2″ · CMYK-safe palette · bleed 0.125″</span>
+  </div>
+
+  <!-- Primary: light front + dark back -->
+  <div>
+    <div class="pair">
+      <div>
+        <div class="card front">
+          <div class="front-top">
+            <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+            <span class="product">EST. 2002</span>
+          </div>
+          <div class="front-mid">
+            <h2 class="front-name">Hana <em>Park</em></h2>
+            <p class="front-role">Director, Localization Strategy</p>
+          </div>
+          <div class="front-bottom">
+            <div class="front-contact">
+              <div><span class="label">E</span> hana.park@iyuno.com</div>
+              <div><span class="label">M</span> +82 10 5512 0140</div>
+              <div><span class="label">A</span> Seoul · Los Angeles · London</div>
+            </div>
+            <div class="front-mark">
+              <img src="../assets/iyuno-mark.svg" alt=""/>
+            </div>
+          </div>
+        </div>
+        <p class="card-label">Front · light</p>
+      </div>
+
+      <div>
+        <div class="card back">
+          <div class="back-mark">
+            <img src="../assets/iyuno-logo-white.svg" alt="Iyuno"/>
+            <span class="div"></span>
+            <span class="tag">Refresh, not rebrand</span>
+          </div>
+          <p class="back-statement">Creativity travels.<br/><em>Meaning stays.</em></p>
+          <div class="back-foot">
+            <span>© Iyuno 2026</span>
+            <span class="url">iyuno.com</span>
+          </div>
+        </div>
+        <p class="card-label">Back · ink</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Variants -->
+  <section class="variants">
+    <h2>Approved variants — for senior executives, partner-facing roles, or events</h2>
+    <div class="variant-row">
+      <div class="variant amber">
+        <img src="../assets/iyuno-logo-mono.svg" alt="Iyuno" style="filter: brightness(0.3);"/>
+        <div>
+          <p class="nm">Eun-Ji Kim</p>
+          <p class="role">Chief Executive Officer</p>
+        </div>
+        <div class="ctc">eunji.kim@iyuno.com · iyuno.com</div>
+      </div>
+      <div class="variant warm">
+        <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+        <div>
+          <p class="nm">Marcus Webb</p>
+          <p class="role">Head of Partnerships, EMEA</p>
+        </div>
+        <div class="ctc">marcus.webb@iyuno.com · +44 20 7946 0411</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Print specs -->
+  <section class="specs">
+    <div class="spec">
+      <h3>Trim size</h3>
+      <p><code>3.5″ × 2″</code><br/>(89 × 51 mm) — US standard</p>
+    </div>
+    <div class="spec">
+      <h3>Bleed</h3>
+      <p><code>0.125″</code> on all sides<br/>Safe area inset <code>0.125″</code></p>
+    </div>
+    <div class="spec">
+      <h3>Stock</h3>
+      <p>32pt natural uncoated, soft-touch lamination optional. Not glossy.</p>
+    </div>
+    <div class="spec">
+      <h3>Color</h3>
+      <p>Front: <code>#FAFAF8</code> + <code>#1F1D19</code><br/>Back: <code>#1F1D19</code><br/>Accent: <code>#FFB549</code> Pantone 1365 C</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

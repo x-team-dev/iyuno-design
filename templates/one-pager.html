@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Iyuno · One-pager Template</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  html, body { margin: 0; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
+  .page-wrap { padding: 48px 32px; display: flex; justify-content: center; }
+
+  /* US Letter at 96dpi: 816 × 1056. Scale via CSS for screen view. */
+  .page {
+    width: 816px; min-height: 1056px;
+    background: var(--bg);
+    box-shadow: 0 30px 60px -20px oklch(0.20 0.02 80 / 0.25), 0 0 0 1px var(--border);
+    padding: 64px 72px;
+    box-sizing: border-box;
+    color: var(--fg);
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  /* Subtle paper texture line at the top */
+  .page::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: var(--accent);
+  }
+
+  .head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+  .head .meta {
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    text-align: right;
+    line-height: 1.6;
+  }
+  .head .meta strong { color: var(--fg); font-weight: 600; }
+
+  .lockup {
+    font-family: var(--font-display); font-size: 24px; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .lockup img { height: 24px; }
+  .lockup .product { color: var(--fg-3); font-weight: 500; }
+  .lockup .product::before { content: '/ '; margin-right: 4px; color: var(--border-strong); }
+
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .hero {
+    margin-bottom: 36px;
+  }
+  .hero h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 56px; line-height: 1.05; letter-spacing: -0.02em;
+    margin: 0 0 18px; max-width: 18ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p {
+    font-size: 16px; line-height: 1.6; color: var(--fg-2);
+    max-width: 60ch; margin: 0;
+  }
+
+  .section { margin-bottom: 32px; }
+  .section h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.01em; margin: 0 0 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .section h2 .num {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--fg-3); font-weight: 500;
+  }
+  .section p {
+    font-size: 13px; line-height: 1.65; color: var(--fg);
+    margin: 0 0 10px; max-width: 64ch;
+  }
+
+  /* Three-up feature grid */
+  .features {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  .feat {
+    padding: 18px; background: var(--ink-50);
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .feat-tag {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .feat-name { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; margin: 0; }
+  .feat-desc { font-size: 12px; line-height: 1.5; color: var(--fg-2); margin: 0; }
+
+  /* Stats strip */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    background: var(--ink-950); color: var(--ink-50);
+    border-radius: var(--r-md); padding: 24px 28px;
+    margin: 8px 0 32px;
+  }
+  .stat-num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 36px; line-height: 1; letter-spacing: -0.02em;
+    color: var(--accent); display: block;
+  }
+  .stat-num small { font-size: 0.5em; color: var(--ink-300); margin-left: 4px; }
+  .stat-lbl {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    color: var(--ink-300); text-transform: uppercase; margin-top: 8px; display: block;
+  }
+
+  /* How it works */
+  .steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    align-items: stretch;
+  }
+  .step {
+    padding: 14px; border: 1px solid var(--border); border-radius: var(--r-md);
+    background: var(--bg);
+    display: flex; flex-direction: column; gap: 6px;
+    position: relative;
+  }
+  .step-n {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+    color: var(--fg-3);
+  }
+  .step-t { font-family: var(--font-display); font-size: 16px; margin: 0; letter-spacing: -0.005em; }
+  .step-d { font-size: 11px; color: var(--fg-2); line-height: 1.5; margin: 0; }
+
+  /* Quote pulled out */
+  .pull {
+    display: grid; grid-template-columns: 4px 1fr; gap: 16px;
+    margin: 0 0 32px;
+    padding: 18px 20px;
+    background: var(--amber-50);
+    border-radius: var(--r-md);
+  }
+  .pull .bar { background: var(--accent); border-radius: 2px; }
+  .pull blockquote {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 18px; line-height: 1.45; letter-spacing: -0.01em;
+    margin: 0; color: var(--amber-900);
+    max-width: 60ch;
+  }
+  .pull cite {
+    font-style: normal; font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--amber-900); opacity: 0.75; margin-top: 8px; display: block;
+  }
+
+  /* CTA / Foot */
+  .cta {
+    margin-top: auto;
+    padding-top: 24px; border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto; gap: 24px;
+    align-items: center;
+  }
+  .cta-msg {
+    font-family: var(--font-display); font-size: 22px; line-height: 1.25;
+    letter-spacing: -0.01em; margin: 0; max-width: 32ch;
+  }
+  .cta-buttons { display: flex; gap: 8px; align-items: center; }
+  .cta-buttons .btn {
+    font-family: var(--font-body); font-weight: 600; font-size: 12px;
+    padding: 9px 16px; border-radius: var(--r-md);
+    border: 1px solid var(--border-strong); background: var(--bg);
+    color: var(--fg); white-space: nowrap;
+  }
+  .cta-buttons .btn-primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+  .foot {
+    margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    color: var(--fg-3); text-transform: uppercase;
+  }
+
+  /* Print */
+  @media print {
+    @page { size: letter; margin: 0; }
+    html, body { background: #fff; padding: 0; margin: 0; }
+    .page-wrap { padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<article class="page">
+
+  <header class="head">
+    <div class="lockup">
+      <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+      <span class="product">Brief</span>
+    </div>
+    <div class="meta">
+      <strong>One-pager template</strong><br/>
+      v1.0 · 2026<br/>
+      Replace this copy with yours
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">Section eyebrow · short context</span>
+    <h1>Carry meaning <em>forward</em>, locale to locale.</h1>
+    <p>This is the lede. Two short sentences, ideally — what the reader is looking at and why it matters. Keep adjectives out; let the next sections carry the weight.</p>
+  </section>
+
+  <div class="stats">
+    <div>
+      <span class="stat-num">6.4<small>d</small></span>
+      <span class="stat-lbl">Avg. turnaround</span>
+    </div>
+    <div>
+      <span class="stat-num">42<small>×</small></span>
+      <span class="stat-lbl">Volume vs 2018</span>
+    </div>
+    <div>
+      <span class="stat-num">312</span>
+      <span class="stat-lbl">Cues per episode</span>
+    </div>
+    <div>
+      <span class="stat-num">98<small>%</small></span>
+      <span class="stat-lbl">Glossary recall</span>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>What it does <span class="num">— 01</span></h2>
+    <div class="features">
+      <div class="feat">
+        <span class="feat-tag">Pillar</span>
+        <h3 class="feat-name">First idea</h3>
+        <p class="feat-desc">A short, concrete sentence about what this is and the work it does. No adjective stacks.</p>
+      </div>
+      <div class="feat">
+        <span class="feat-tag">Pillar</span>
+        <h3 class="feat-name">Second idea</h3>
+        <p class="feat-desc">Parallel construction with the first. Reader scans down the page; rhythm matters.</p>
+      </div>
+      <div class="feat">
+        <span class="feat-tag">Pillar</span>
+        <h3 class="feat-name">Third idea</h3>
+        <p class="feat-desc">The unfair advantage, the one thing that's hard to copy. End with the strongest of the three.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>How it works <span class="num">— 02</span></h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-n">— 01</span>
+        <h4 class="step-t">Step one</h4>
+        <p class="step-d">A short verb-led description of what happens at this stage.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">— 02</span>
+        <h4 class="step-t">Step two</h4>
+        <p class="step-d">Keep each step description to a single line. The page should breathe.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">— 03</span>
+        <h4 class="step-t">Step three</h4>
+        <p class="step-d">If the flow has more than four steps, consider whether it needs a full document.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">— 04</span>
+        <h4 class="step-t">Step four</h4>
+        <p class="step-d">End on the outcome — what the reader walks away with.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="pull">
+    <div class="bar"></div>
+    <div>
+      <blockquote>"A pulled quote earns the space. One sentence. Specific, surprising, said by a real person."</blockquote>
+      <cite>— Attribution, role and company</cite>
+    </div>
+  </div>
+
+  <div class="cta">
+    <p class="cta-msg">Close with a question, not a slogan.</p>
+    <div class="cta-buttons">
+      <button class="btn">Secondary action</button>
+      <button class="btn btn-primary">Primary action</button>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span>iyuno.com</span>
+    <span>© 2026 Iyuno · Refresh, not rebrand.</span>
+  </footer>
+
+</article>
+</div>
+</body>
+</html>

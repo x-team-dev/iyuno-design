@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Tabs</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body{margin:0;padding:24px;background:var(--bg)}
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--border)}
+  .tab{font-family:var(--font-body);font-size:14px;font-weight:500;color:var(--fg-3);padding:10px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--fg-2)}
+  .tab.active{color:var(--fg);border-bottom-color:var(--accent)}
+  .count{font-family:var(--font-mono);font-size:11px;color:var(--fg-mute);margin-left:6px}
+</style></head>
+<body class="ds-root">
+  <div class="tabs">
+    <div class="tab active">Overview</div>
+    <div class="tab">Agents <span class="count">16</span></div>
+    <div class="tab">Outputs <span class="count">4</span></div>
+    <div class="tab">Logs</div>
+    <div class="tab">Settings</div>
+  </div>
+</body></html>

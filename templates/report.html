@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Iyuno · Report Template</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  html, body { margin: 0; background: var(--ink-200); color: var(--fg); font-family: var(--font-body); }
+  .stack { padding: 48px 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+
+  /* US Letter at 96dpi */
+  .page {
+    width: 816px; min-height: 1056px;
+    background: var(--bg);
+    box-shadow: 0 30px 60px -20px oklch(0.20 0.02 80 / 0.22), 0 0 0 1px var(--border);
+    box-sizing: border-box;
+    color: var(--fg);
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ---------- Running header / footer ---------- */
+  .run-head {
+    position: absolute; top: 36px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--fg-3);
+  }
+  .run-head img { height: 14px; opacity: 0.85; }
+  .run-foot {
+    position: absolute; bottom: 36px; left: 64px; right: 64px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-3);
+  }
+  .run-foot .pn { font-feature-settings: 'tnum'; }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    background: var(--ink-950); color: var(--ink-50);
+    --fg: var(--ink-50);
+    --fg-2: var(--ink-200);
+    --fg-3: var(--ink-400);
+    padding: 96px 64px 64px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 1056px;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: var(--accent);
+  }
+  .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cover-top img { height: 22px; }
+  .cover-meta {
+    text-align: right; font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-300);
+    line-height: 1.7;
+  }
+  .cover-meta strong { color: var(--ink-50); font-weight: 600; }
+  .cover-mid { padding: 64px 0 32px; }
+  .cover-eyebrow {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .cover-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 64px; line-height: 1.05; letter-spacing: -0.025em;
+    margin: 24px 0 32px; max-width: 14ch;
+  }
+  .cover-title em { font-style: normal; color: var(--accent); }
+  .cover-sub {
+    font-size: 18px; line-height: 1.55; color: var(--ink-200);
+    max-width: 56ch; margin: 0;
+  }
+  .cover-bottom {
+    border-top: 1px solid oklch(1 0 0 / 0.08); padding-top: 24px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .cover-meta-block {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-300); line-height: 1.6;
+  }
+  .cover-meta-block strong {
+    display: block; color: var(--ink-50); font-weight: 600;
+    font-size: 12px; margin-bottom: 6px;
+  }
+  .cover-meta-block .body {
+    font-family: var(--font-body); font-size: 13px;
+    text-transform: none; letter-spacing: 0; color: var(--ink-100);
+  }
+
+  /* ---------- INNER PAGE LAYOUT ---------- */
+  .inner {
+    padding: 84px 64px 84px;
+    display: grid; grid-template-columns: 160px 1fr; gap: 32px;
+    box-sizing: border-box;
+  }
+  .side {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--fg-3); line-height: 1.7;
+  }
+  .side .num {
+    font-family: var(--font-display); font-weight: 700; font-size: 36px;
+    color: var(--accent); letter-spacing: -0.02em;
+    display: block; line-height: 1; margin-bottom: 12px;
+  }
+  .side strong { color: var(--fg); display: block; font-weight: 600; }
+
+  .body-col h1.h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 36px; letter-spacing: -0.02em; line-height: 1.1;
+    margin: 0 0 8px; max-width: 22ch;
+  }
+  .body-col .deck {
+    font-size: 16px; line-height: 1.55; color: var(--fg-2);
+    margin: 0 0 32px; max-width: 56ch;
+    padding-bottom: 24px; border-bottom: 1px solid var(--border);
+  }
+  .body-col h2.h2 {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 20px; letter-spacing: -0.01em; line-height: 1.3;
+    margin: 28px 0 10px;
+  }
+  .body-col p, .body-col li {
+    font-size: 13px; line-height: 1.7; color: var(--fg);
+    margin: 0 0 12px; max-width: 64ch;
+  }
+  .body-col ul, .body-col ol { padding-left: 18px; margin: 0 0 12px; }
+  .body-col li { margin-bottom: 6px; }
+  .body-col a { color: var(--amber-700); text-decoration: underline; text-underline-offset: 2px; }
+
+  .drop::first-letter {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 56px; line-height: 0.9; float: left;
+    color: var(--accent); margin: 4px 8px 0 0;
+  }
+
+  /* ---------- TOC ---------- */
+  .toc { display: flex; flex-direction: column; gap: 0; }
+  .toc-row {
+    display: grid; grid-template-columns: 32px 1fr auto;
+    gap: 16px; align-items: baseline;
+    padding: 14px 0; border-bottom: 1px dashed var(--border);
+  }
+  .toc-row:last-child { border-bottom: none; }
+  .toc-num {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+    color: var(--fg-3);
+  }
+  .toc-title {
+    font-family: var(--font-display); font-size: 18px; letter-spacing: -0.005em;
+    color: var(--fg); display: flex; flex-direction: column; gap: 2px;
+  }
+  .toc-title small {
+    font-family: var(--font-body); font-size: 12px; color: var(--fg-3);
+    font-weight: 400; max-width: 52ch;
+  }
+  .toc-page {
+    font-family: var(--font-mono); font-size: 12px; color: var(--fg-2);
+    font-feature-settings: 'tnum';
+  }
+
+  /* ---------- KEY FINDINGS BAND ---------- */
+  .findings {
+    margin: 24px 0 32px;
+    background: var(--ink-50);
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    border-radius: 0 6px 6px 0;
+  }
+  .findings h3 {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 12px;
+    font-weight: 600;
+  }
+  .findings ol { padding-left: 18px; margin: 0; }
+  .findings li {
+    font-size: 13px; line-height: 1.55; color: var(--fg);
+    margin-bottom: 6px;
+  }
+  .findings li strong { color: var(--fg); font-weight: 600; }
+
+  /* ---------- CHART (CSS bar) ---------- */
+  .chart {
+    margin: 18px 0 28px;
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 20px 24px;
+    background: var(--bg-elev);
+  }
+  .chart-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .chart-title {
+    font-family: var(--font-display); font-weight: 600; font-size: 14px;
+    letter-spacing: -0.005em; margin: 0; color: var(--fg);
+  }
+  .chart-unit {
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .chart-rows { display: flex; flex-direction: column; gap: 10px; }
+  .chart-row {
+    display: grid; grid-template-columns: 92px 1fr 56px;
+    align-items: center; gap: 10px;
+    font-size: 11px;
+  }
+  .chart-row .lbl {
+    font-family: var(--font-mono); color: var(--fg-2);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .chart-row .bar {
+    height: 10px; background: var(--ink-100); border-radius: 999px;
+    position: relative; overflow: hidden;
+  }
+  .chart-row .bar::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: var(--w, 50%); background: var(--accent); border-radius: 999px;
+  }
+  .chart-row.muted .bar::after { background: var(--ink-400); }
+  .chart-row .v {
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg);
+    font-weight: 600; text-align: right; font-feature-settings: 'tnum';
+  }
+  .chart-foot {
+    margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border);
+    font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- STAT TILES ---------- */
+  .tiles {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin: 8px 0 28px;
+  }
+  .tile {
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .tile-num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 32px; line-height: 1; letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .tile-num small { font-size: 0.5em; color: var(--accent); margin-left: 2px; font-weight: 600; }
+  .tile-lbl {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--fg-3);
+  }
+
+  /* ---------- CASE STRIPE (table-ish) ---------- */
+  .matrix {
+    width: 100%; border-collapse: collapse; margin: 8px 0 24px;
+    font-size: 12px;
+  }
+  .matrix th, .matrix td {
+    text-align: left; padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .matrix th {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-3); font-weight: 500;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .matrix td.title {
+    font-family: var(--font-display); font-weight: 600; font-size: 13px;
+    color: var(--fg);
+  }
+  .matrix td.num {
+    font-family: var(--font-mono); font-feature-settings: 'tnum';
+    text-align: right; color: var(--fg);
+  }
+  .matrix td.num strong { color: var(--accent); font-weight: 700; }
+
+  /* ---------- PULL QUOTE ---------- */
+  .pull {
+    margin: 24px 0;
+    padding: 20px 24px;
+    background: var(--amber-50);
+    border-radius: var(--r-md);
+    display: grid; grid-template-columns: 4px 1fr; gap: 16px;
+  }
+  .pull .bar { background: var(--accent); border-radius: 2px; }
+  .pull blockquote {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 16px; line-height: 1.5; letter-spacing: -0.005em;
+    margin: 0; color: var(--amber-900);
+    max-width: 56ch;
+  }
+  .pull cite {
+    display: block; margin-top: 8px;
+    font-family: var(--font-mono); font-size: 9px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--amber-900); opacity: 0.75; font-style: normal;
+  }
+
+  /* ---------- CONTACTS / CLOSING ---------- */
+  .contacts {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+    margin: 16px 0 28px;
+  }
+  .contact-card {
+    border: 1px solid var(--border); border-radius: var(--r-md);
+    padding: 16px 18px;
+  }
+  .contact-card .nm {
+    font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    margin: 0 0 2px; letter-spacing: -0.005em;
+  }
+  .contact-card .role {
+    font-size: 12px; color: var(--fg-2); margin: 0 0 10px;
+  }
+  .contact-card .line {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-2); line-height: 1.6;
+  }
+  .contact-card .line a { color: var(--amber-700); }
+
+  .endmark {
+    margin: 32px 0 0;
+    text-align: center;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+    color: var(--fg-3); text-transform: uppercase;
+  }
+  .endmark::before, .endmark::after {
+    content: '— '; color: var(--accent);
+  }
+  .endmark::after { content: ' —'; }
+
+  /* ---------- Print ---------- */
+  @media print {
+    @page { size: letter; margin: 0; }
+    html, body { background: #fff; padding: 0; margin: 0; }
+    .stack { padding: 0; gap: 0; }
+    .page { box-shadow: none; outline: none; }
+  }
+</style>
+</head>
+<body>
+<div class="stack">
+
+  <!-- ───────────── COVER ───────────── -->
+  <article class="page cover" data-screen-label="01 Cover">
+    <div class="cover-top">
+      <img src="../assets/iyuno-logo-white.svg" alt="Iyuno"/>
+      <div class="cover-meta">
+        <strong>Report</strong><br/>
+        Vol. 04 · 2026<br/>
+        Confidential — internal &amp; advised partners
+      </div>
+    </div>
+
+    <div class="cover-mid">
+      <span class="cover-eyebrow">Industry Report · Localization at scale</span>
+      <h1 class="cover-title">The state of <em>meaning</em>, post-streaming.</h1>
+      <p class="cover-sub">A quantitative look at how global content release patterns, audience expectations, and pipeline economics have shifted between 2018 and 2026 — and what survives, what breaks, and what gets built next.</p>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-meta-block">
+        <strong>Authors</strong>
+        <span class="body">Iyuno Research<br/>with the Localization Council</span>
+      </div>
+      <div class="cover-meta-block">
+        <strong>Methodology</strong>
+        <span class="body">312 titles · 41 locales<br/>2018 – Q1 2026</span>
+      </div>
+      <div class="cover-meta-block">
+        <strong>Contact</strong>
+        <span class="body">research@iyuno.com<br/>iyuno.com/reports</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- ───────────── TOC ───────────── -->
+  <article class="page" data-screen-label="02 Contents">
+    <div class="run-head">
+      <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+      <span>State of meaning · 2026</span>
+    </div>
+
+    <div class="inner">
+      <aside class="side">
+        <span class="num">00</span>
+        <strong>Contents</strong>
+        How to read this report.
+      </aside>
+      <div class="body-col">
+        <h1 class="h1">What's inside.</h1>
+        <p class="deck">Eight sections, roughly forty pages of analysis. Built for skim-then-dive: each section opens with a one-paragraph deck and a key-findings strip you can lift straight into a meeting.</p>
+
+        <div class="toc">
+          <div class="toc-row">
+            <span class="toc-num">01</span>
+            <span class="toc-title">Executive summary
+              <small>The five things to remember if you read nothing else.</small>
+            </span>
+            <span class="toc-page">p. 04</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">02</span>
+            <span class="toc-title">Market shape
+              <small>Volume, day-and-date release, and the floor we're approaching.</small>
+            </span>
+            <span class="toc-page">p. 06</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">03</span>
+            <span class="toc-title">Pipeline economics
+              <small>Where time actually goes and what an extra locale really costs.</small>
+            </span>
+            <span class="toc-page">p. 12</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">04</span>
+            <span class="toc-title">Memory as infrastructure
+              <small>Why context, not throughput, is the unsolved problem.</small>
+            </span>
+            <span class="toc-page">p. 18</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">05</span>
+            <span class="toc-title">Case studies
+              <small>Three Tier-1 streamers, anonymized, end-to-end.</small>
+            </span>
+            <span class="toc-page">p. 24</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">06</span>
+            <span class="toc-title">2026–2028 outlook
+              <small>What we expect to see and the signals to watch for.</small>
+            </span>
+            <span class="toc-page">p. 32</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">07</span>
+            <span class="toc-title">Methodology &amp; sources</span>
+            <span class="toc-page">p. 38</span>
+          </div>
+          <div class="toc-row">
+            <span class="toc-num">08</span>
+            <span class="toc-title">Contributors &amp; contact</span>
+            <span class="toc-page">p. 40</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-foot">
+      <span>iyuno.com / reports</span>
+      <span class="pn">02 / 04</span>
+    </div>
+  </article>
+
+  <!-- ───────────── BODY (key findings + chart) ───────────── -->
+  <article class="page" data-screen-label="03 Body">
+    <div class="run-head">
+      <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+      <span>02 · Market shape</span>
+    </div>
+
+    <div class="inner">
+      <aside class="side">
+        <span class="num">02</span>
+        <strong>Market shape</strong>
+        Volume &amp; cadence,<br/>2018 – 2026.
+      </aside>
+      <div class="body-col">
+        <h1 class="h1">Day-and-date is the floor.</h1>
+        <p class="deck">For a top-tier streaming original in 2026, the question is no longer <em>which</em> locales ship at launch — it's whether anything ships <em>after</em> launch at all. Same-day-everywhere is not a feature. It's table stakes.</p>
+
+        <div class="findings">
+          <h3>Key findings</h3>
+          <ol>
+            <li><strong>96% of Tier-1 originals</strong> now release across 30+ locales simultaneously, up from 38% in 2018.</li>
+            <li><strong>Average turnaround dropped to 6.4 days</strong> — a 4.4× compression in seven years.</li>
+            <li><strong>Per-locale incremental cost fell 71%</strong>, but total spend rose 3.2× as catalogs deepened.</li>
+            <li><strong>Context loss</strong>, not throughput, is now the dominant source of editorial rework.</li>
+          </ol>
+        </div>
+
+        <h2 class="h2">Volume vs cadence, 2018 → 2026</h2>
+        <p>Two curves moved together: total minutes commissioned and how many of those minutes shipped on launch day. Neither is slowing. The ceiling for new originals isn't capacity — it's the editorial cost of relearning context for each new locale.</p>
+
+        <div class="chart">
+          <div class="chart-head">
+            <h3 class="chart-title">Day-and-date release rate by year</h3>
+            <span class="chart-unit">% of Tier-1 originals</span>
+          </div>
+          <div class="chart-rows">
+            <div class="chart-row muted"><span class="lbl">2018</span><span class="bar" style="--w:38%"></span><span class="v">38%</span></div>
+            <div class="chart-row muted"><span class="lbl">2020</span><span class="bar" style="--w:54%"></span><span class="v">54%</span></div>
+            <div class="chart-row muted"><span class="lbl">2022</span><span class="bar" style="--w:71%"></span><span class="v">71%</span></div>
+            <div class="chart-row muted"><span class="lbl">2024</span><span class="bar" style="--w:88%"></span><span class="v">88%</span></div>
+            <div class="chart-row"><span class="lbl">2026</span><span class="bar" style="--w:96%"></span><span class="v">96%</span></div>
+          </div>
+          <div class="chart-foot">Source: Iyuno data lake, n = 312 originals, 41 locales · Tier-1 = top 12 streaming services by paid sub count.</div>
+        </div>
+
+        <div class="tiles">
+          <div class="tile">
+            <span class="tile-num">42<small>×</small></span>
+            <span class="tile-lbl">Volume vs 2018</span>
+          </div>
+          <div class="tile">
+            <span class="tile-num">6.4<small>d</small></span>
+            <span class="tile-lbl">Avg. turnaround</span>
+          </div>
+          <div class="tile">
+            <span class="tile-num">71<small>%</small></span>
+            <span class="tile-lbl">Per-locale cost ↓</span>
+          </div>
+        </div>
+
+        <div class="pull">
+          <div class="bar"></div>
+          <div>
+            <blockquote>"The economics flipped quietly. Adding a 38th locale used to be a budget conversation. Now it's a memory question — does the graph already know the show?"</blockquote>
+            <cite>— Director of Localization Strategy, Tier-1 streamer</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-foot">
+      <span>iyuno.com / reports</span>
+      <span class="pn">03 / 04</span>
+    </div>
+  </article>
+
+  <!-- ───────────── BODY 2 (case matrix + closing) ───────────── -->
+  <article class="page" data-screen-label="04 Cases & contacts">
+    <div class="run-head">
+      <img src="../assets/iyuno-logo.svg" alt="Iyuno"/>
+      <span>05 · Case studies</span>
+    </div>
+
+    <div class="inner">
+      <aside class="side">
+        <span class="num">05</span>
+        <strong>Three streamers</strong>
+        Anonymized,<br/>end-to-end.
+      </aside>
+      <div class="body-col">
+        <h1 class="h1">Three pipelines, three outcomes.</h1>
+        <p class="deck drop">Each Tier-1 streamer in this study began the migration to memory-backed pipelines at a different point — and ended up at a different place. The matrix below summarizes what changed; the case studies that follow tell each story in full.</p>
+
+        <h2 class="h2">At a glance</h2>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>Streamer</th>
+              <th>Started</th>
+              <th>Locales</th>
+              <th class="num">Turnaround Δ</th>
+              <th class="num">Cost / locale Δ</th>
+              <th class="num">Editor hrs Δ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="title">Streamer A</td>
+              <td>2022</td>
+              <td>41</td>
+              <td class="num"><strong>−78%</strong></td>
+              <td class="num">−64%</td>
+              <td class="num">−41%</td>
+            </tr>
+            <tr>
+              <td class="title">Streamer B</td>
+              <td>2023</td>
+              <td>32</td>
+              <td class="num"><strong>−61%</strong></td>
+              <td class="num">−52%</td>
+              <td class="num">−29%</td>
+            </tr>
+            <tr>
+              <td class="title">Streamer C</td>
+              <td>2025</td>
+              <td>28</td>
+              <td class="num"><strong>−44%</strong></td>
+              <td class="num">−38%</td>
+              <td class="num">−18%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="h2">What separates the deltas</h2>
+        <p>The earliest mover (A) saw the largest compounding effect: every new title joined a memory graph that already knew the studio's voice patterns. The latest mover (C) is still in the cold-start phase. The math says: <em>start now</em> — the second year is where the gains live.</p>
+        <ul>
+          <li>Year 1 gains come from glossary unification — solid, predictable, ~30%.</li>
+          <li>Year 2+ gains come from voice and scene memory transfer — non-linear, up to ~75%.</li>
+          <li>The dominant remaining cost is human editorial — <em>not</em> machine cost, <em>not</em> per-minute fees.</li>
+        </ul>
+
+        <h2 class="h2">Contributors</h2>
+        <div class="contacts">
+          <div class="contact-card">
+            <p class="nm">Iyuno Research</p>
+            <p class="role">Lead authors · methodology</p>
+            <div class="line">
+              research@iyuno.com<br/>
+              iyuno.com / reports
+            </div>
+          </div>
+          <div class="contact-card">
+            <p class="nm">Localization Council</p>
+            <p class="role">Industry advisory · case studies</p>
+            <div class="line">
+              council@iyuno.com<br/>
+              By invitation only
+            </div>
+          </div>
+          <div class="contact-card">
+            <p class="nm">Press &amp; partnerships</p>
+            <p class="role">Citations · republication</p>
+            <div class="line">
+              press@iyuno.com<br/>
+              +1 213 555 0140
+            </div>
+          </div>
+          <div class="contact-card">
+            <p class="nm">Pilot programs</p>
+            <p class="role">Run a benchmark on your catalog</p>
+            <div class="line">
+              pilots@iyuno.com<br/>
+              4-week engagement
+            </div>
+          </div>
+        </div>
+
+        <p class="endmark">End of excerpt</p>
+      </div>
+    </div>
+
+    <div class="run-foot">
+      <span>© 2026 Iyuno · Refresh, not rebrand.</span>
+      <span class="pn">04 / 04</span>
+    </div>
+  </article>
+
+</div>
+</body>
+</html>

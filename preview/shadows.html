@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Shadows</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>body{margin:0;padding:30px;background:var(--bg)} .row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px} .item{display:flex;flex-direction:column;align-items:center;gap:10px} .box{width:120px;height:70px;background:#fff;border:1px solid var(--border);border-radius:var(--r-md)} .lbl{font-family:var(--font-mono);font-size:11px;color:var(--fg-2)}</style></head>
+<body class="ds-root">
+  <div class="row">
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-xs)"></div><span class="lbl">xs</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-sm)"></div><span class="lbl">sm</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-md)"></div><span class="lbl">md</span></div>
+    <div class="item"><div class="box" style="box-shadow:var(--shadow-lg)"></div><span class="lbl">lg</span></div>
+  </div>
+</body></html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><title>Surfaces</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:24px; background:var(--bg); display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .surf { border-radius:var(--r-md); padding:18px; border:1px solid var(--border); }
+  .light { background:var(--ink-50); }
+  .light .elev { background:#fff; }
+  .dark { background:var(--ink-950); border-color:var(--ink-800); }
+  .dark .elev { background:var(--ink-900); border-color:var(--ink-800); }
+  .stack { display:flex; flex-direction:column; gap:8px; }
+  .item { padding:10px 12px; border-radius:var(--r-md); border:1px solid var(--border); }
+  .dark .item { border-color:var(--ink-800); }
+  .lbl { font-family:var(--font-mono); font-size:10px; color:var(--fg-3); }
+  .name { font-family:var(--font-body); font-size:13px; color:var(--fg); font-weight:500; }
+</style></head>
+<body class="ds-root">
+  <div class="surf light">
+    <div class="lbl">LIGHT</div>
+    <div class="stack" style="margin-top:8px">
+      <div class="item elev"><span class="name">Surface — #fff on --bg</span></div>
+      <div class="item" style="background:var(--ink-100)"><span class="name">Sunk — --bg-sunk</span></div>
+    </div>
+  </div>
+  <div class="surf dark theme-dark" data-theme="dark">
+    <div class="lbl">DARK</div>
+    <div class="stack" style="margin-top:8px">
+      <div class="item elev"><span class="name" style="color:var(--ink-50)">Surface — --ink-900</span></div>
+      <div class="item" style="background:#110f0c"><span class="name" style="color:var(--ink-50)">Sunk — --bg-sunk</span></div>
+    </div>
+  </div>
+</body></html>
