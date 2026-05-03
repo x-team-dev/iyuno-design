@@ -28,6 +28,10 @@ a { color: inherit; text-decoration: none; }
 }
 .kit-nav a:hover { background: var(--ink-100); color: var(--fg); }
 .kit-nav a.active { background: var(--ink-950); color: var(--ink-50); }
+.kit-nav-sep {
+  width: 1px; height: 18px; align-self: center;
+  background: var(--border-strong); margin: 0 4px; flex-shrink: 0;
+}
 
 .kit-main { max-width: 1280px; margin: 0 auto; padding: 64px 32px 96px; }
 .kit-hero { margin-bottom: 64px; }
