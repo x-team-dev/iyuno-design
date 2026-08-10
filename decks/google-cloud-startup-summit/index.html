@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="Iyuno at Google Cloud Startup Summit Singapore 2026 — The Context Gap" />
+<title>Iyuno · The Context Gap</title>
+<link rel="icon" href="../../assets/iyuno-mark.svg" />
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; background: var(--ink-950); color: var(--fg); }
+  deck-stage { background: var(--ink-950); }
+
+  .slide {
+    width: 1920px;
+    height: 1080px;
+    padding: 118px 136px 104px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background: var(--ink-50);
+    color: var(--ink-950);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  .slide.dark {
+    background: var(--ink-950);
+    color: var(--ink-50);
+    --bg: var(--ink-950);
+    --fg: var(--ink-50);
+    --fg-2: var(--ink-200);
+    --fg-3: var(--ink-400);
+    --border: var(--ink-800);
+    --border-strong: var(--ink-700);
+  }
+  .slide.warm { background: var(--ink-100); }
+  .slide.amber {
+    background: var(--amber-500);
+    color: var(--amber-900);
+    --fg: var(--amber-900);
+    --fg-2: var(--amber-900);
+    --fg-3: var(--amber-800);
+  }
+
+  .stamp {
+    position: absolute;
+    inset-block-start: 52px;
+    inset-inline: 136px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+  .dark .stamp { color: var(--ink-400); }
+  .amber .stamp { color: var(--amber-900); opacity: .72; }
+  .stamp img { height: 34px; width: auto; }
+
+  .foot {
+    position: absolute;
+    inset-block-end: 46px;
+    inset-inline: 136px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--ink-500);
+  }
+  .dark .foot { color: var(--ink-400); }
+  .amber .foot { color: var(--amber-900); opacity: .72; }
+
+  h1, h2, h3, p { margin: 0; }
+  .eyebrow {
+    margin: 0 0 24px;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--amber-700);
+  }
+  .dark .eyebrow { color: var(--amber-400); }
+  .amber .eyebrow { color: var(--amber-900); }
+  .display {
+    max-width: 13ch;
+    font-family: var(--font-display);
+    font-size: 144px;
+    font-weight: 700;
+    line-height: .96;
+    letter-spacing: -.04em;
+    text-wrap: balance;
+  }
+  .headline {
+    max-width: 19ch;
+    font-family: var(--font-display);
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 1.03;
+    letter-spacing: -.03em;
+    text-wrap: balance;
+  }
+  .subhead {
+    max-width: 34ch;
+    margin-top: 30px;
+    font-size: 31px;
+    line-height: 1.42;
+    color: var(--ink-700);
+    text-wrap: pretty;
+  }
+  .dark .subhead { color: var(--ink-300); }
+  .amber .subhead { color: var(--amber-900); opacity: .86; }
+  .accent { color: var(--amber-600); }
+  .dark .accent { color: var(--amber-400); }
+
+  /* 01 — universal hook */
+  .title-slide { justify-content: center; }
+  .title-slide .display { max-width: 12ch; }
+  .title-side {
+    position: absolute;
+    inset-inline-end: 136px;
+    inset-block-end: 118px;
+    width: 450px;
+    padding-top: 24px;
+    border-top: 2px solid var(--amber-500);
+    font-size: 24px;
+    line-height: 1.42;
+    color: var(--ink-300);
+  }
+  .signal-field {
+    position: absolute;
+    inset-inline-end: 120px;
+    inset-block-start: 120px;
+    width: 500px;
+    height: 500px;
+    opacity: .9;
+  }
+  .signal-dot {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--ink-600);
+    border-radius: 50%;
+    background: var(--ink-950);
+  }
+  .signal-dot.hot { width: 28px; height: 28px; border-color: var(--amber-400); background: var(--amber-500); }
+  .signal-line { position: absolute; height: 2px; transform-origin: left center; background: var(--ink-700); }
+  .signal-line.hot { background: var(--amber-600); }
+
+  /* 02 — scaling map */
+  .scale-stage {
+    display: grid;
+    grid-template-columns: 390px 1fr;
+    gap: 110px;
+    align-items: center;
+    flex: 1;
+    margin-top: 34px;
+  }
+  .source-card {
+    min-height: 380px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--ink-300);
+    border-radius: var(--r-lg);
+    background: #fff;
+  }
+  .source-card .frame {
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--r-md);
+    background: var(--ink-950);
+  }
+  .frame .figure-a, .frame .figure-b {
+    position: absolute;
+    inset-block-end: -20px;
+    width: 120px;
+    height: 210px;
+    border-radius: 64px 64px 0 0;
+    border: 2px solid var(--ink-600);
+  }
+  .frame .figure-a { inset-inline-start: 50px; }
+  .frame .figure-b { inset-inline-end: 50px; border-color: var(--amber-500); }
+  .source-card strong { font-size: 42px; line-height: 1.05; letter-spacing: -.02em; }
+  .branch-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .branch {
+    min-height: 156px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--ink-300);
+    border-radius: var(--r-md);
+    background: #fff;
+  }
+  .branch:nth-child(even) { transform: translateY(18px); }
+  .branch .n { font-family: var(--font-mono); font-size: 16px; color: var(--ink-500); }
+  .branch strong { font-size: 29px; line-height: 1.08; }
+  .branch span:last-child { font-size: 18px; line-height: 1.32; color: var(--ink-600); }
+  .scale-message { margin-top: 30px; font-size: 28px; font-weight: 600; }
+
+  /* 03 — context reconstruction */
+  .context-stage {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 110px;
+    align-items: center;
+    flex: 1;
+    margin-top: 40px;
+  }
+  .line-card {
+    padding: 58px;
+    border-radius: var(--r-lg);
+    background: var(--ink-950);
+    color: var(--ink-50);
+  }
+  .line-card .quote { font-size: 74px; font-weight: 650; line-height: 1.05; letter-spacing: -.03em; color: var(--ink-50); }
+  .line-card .question { margin-top: 56px; font-family: var(--font-mono); font-size: 20px; color: var(--ink-400); }
+  .context-stack { display: grid; gap: 18px; }
+  .context-row {
+    min-height: 82px;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--ink-300);
+    font-size: 25px;
+  }
+  .context-row .label { font-family: var(--font-mono); font-size: 17px; color: var(--amber-700); text-transform: uppercase; letter-spacing: .05em; }
+  .context-result {
+    margin-top: 18px;
+    padding: 28px;
+    border-radius: var(--r-md);
+    background: var(--amber-100);
+    font-size: 30px;
+    font-weight: 650;
+  }
+
+  /* 04 — CLOE reveal */
+  .cloe-stage {
+    display: grid;
+    grid-template-columns: 430px 1fr;
+    gap: 110px;
+    align-items: center;
+    flex: 1;
+    margin-top: 44px;
+  }
+  .watch-card {
+    height: 500px;
+    padding: 32px;
+    box-sizing: border-box;
+    border: 1px solid var(--ink-700);
+    border-radius: var(--r-lg);
+    background: var(--ink-900);
+  }
+  .watch-frame {
+    height: 290px;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--r-md);
+    background: var(--ink-950);
+  }
+  .watch-frame .figure-a, .watch-frame .figure-b {
+    position: absolute;
+    inset-block-end: -30px;
+    width: 132px;
+    height: 245px;
+    border-radius: 72px 72px 0 0;
+    border: 2px solid var(--ink-600);
+  }
+  .watch-frame .figure-a { inset-inline-start: 56px; color: var(--ink-600); }
+  .watch-frame .figure-b { inset-inline-end: 56px; border-color: var(--amber-500); color: var(--amber-500); }
+  .watch-frame .figure-a::after, .watch-frame .figure-b::after {
+    content: '';
+    position: absolute;
+    inset-block-start: -52px;
+    inset-inline-start: 37px;
+    width: 54px;
+    height: 54px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    background: var(--ink-950);
+  }
+  .watch-frame::after {
+    content: '00:00:12.840';
+    position: absolute;
+    inset-inline-end: 18px;
+    inset-block-end: 16px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-300);
+  }
+  .watch-caption { margin-top: 30px; font-family: var(--font-mono); font-size: 18px; color: var(--amber-400); }
+  .watch-card strong { display: block; margin-top: 12px; font-size: 34px; }
+  .memory-map { position: relative; height: 520px; }
+  .memory-core {
+    position: absolute;
+    inset: 145px auto auto 310px;
+    width: 240px;
+    height: 240px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--amber-500);
+    color: var(--amber-900);
+    text-align: center;
+    font-size: 38px;
+    line-height: 1.05;
+    font-weight: 700;
+    z-index: 2;
+  }
+  .memory-ring { position: absolute; inset: 74px auto auto 238px; width: 380px; height: 380px; border: 1px solid var(--ink-700); border-radius: 50%; }
+  .memory-node {
+    position: absolute;
+    width: 240px;
+    padding: 22px 26px;
+    box-sizing: border-box;
+    border: 1px solid var(--ink-700);
+    border-radius: var(--r-md);
+    background: var(--ink-900);
+  }
+  .memory-node strong { display: block; font-size: 26px; }
+  .memory-node span { display: block; margin-top: 7px; font-size: 17px; line-height: 1.3; color: var(--ink-400); }
+  .memory-node.a { inset-block-start: 8px; inset-inline-start: 310px; }
+  .memory-node.b { inset-block-start: 124px; inset-inline-end: 0; }
+  .memory-node.c { inset-block-end: 16px; inset-inline-end: 90px; }
+  .memory-node.d { inset-block-end: 16px; inset-inline-start: 20px; }
+  .memory-node.e { inset-block-start: 124px; inset-inline-start: 0; }
+
+  /* 05 — architecture */
+  .system-stage {
+    display: grid;
+    grid-template-columns: 1fr 90px 1.2fr 90px 1fr;
+    gap: 24px;
+    align-items: center;
+    flex: 1;
+    margin-top: 58px;
+  }
+  .system-layer {
+    min-height: 460px;
+    padding: 42px;
+    box-sizing: border-box;
+    border: 1px solid var(--ink-300);
+    border-radius: var(--r-lg);
+    background: #fff;
+  }
+  .system-layer.context { border-color: var(--amber-600); background: var(--amber-50); }
+  .layer-label { font-family: var(--font-mono); font-size: 16px; color: var(--ink-500); text-transform: uppercase; letter-spacing: .06em; }
+  .system-layer h3 { margin-top: 110px; font-size: 46px; line-height: 1.04; letter-spacing: -.025em; }
+  .system-layer p { margin-top: 24px; font-size: 22px; line-height: 1.42; color: var(--ink-600); }
+  .system-arrow { text-align: center; font-size: 54px; color: var(--amber-700); }
+  .output-list { display: grid; gap: 14px; margin-top: 52px; }
+  .output-list span { padding-bottom: 14px; border-bottom: 1px solid var(--ink-300); font-size: 24px; font-weight: 600; }
+
+  /* 06 — vision */
+  .vision-slide { justify-content: center; }
+  .vision-slide .display { max-width: 12ch; font-size: 126px; }
+  .vision-slide .vision-line {
+    margin-top: 42px;
+    max-width: 44ch;
+    font-size: 34px;
+    line-height: 1.42;
+    font-weight: 600;
+  }
+  .vision-note {
+    position: absolute;
+    inset-inline-end: 136px;
+    inset-block-end: 124px;
+    width: 500px;
+    padding-top: 22px;
+    border-top: 2px solid var(--amber-900);
+    font-family: var(--font-mono);
+    font-size: 20px;
+    line-height: 1.45;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<deck-stage>
+
+  <section class="slide dark title-slide" data-screen-label="01 The Context Gap">
+    <div class="stamp">
+      <img src="../../assets/iyuno-logo-white.svg" alt="Iyuno" />
+      <span>Google Cloud Startup Summit · Singapore</span>
+    </div>
+    <p class="eyebrow">The agentic frontier</p>
+    <h1 class="display">The<br/><span class="accent">Context</span><br/>Gap.</h1>
+    <div class="signal-field" aria-hidden="true">
+      <span class="signal-line" style="width:170px;left:78px;top:104px;transform:rotate(25deg)"></span>
+      <span class="signal-line" style="width:178px;left:225px;top:175px;transform:rotate(38deg)"></span>
+      <span class="signal-line" style="width:210px;left:123px;top:298px;transform:rotate(-24deg)"></span>
+      <span class="signal-line hot" style="width:154px;left:238px;top:226px;transform:rotate(68deg)"></span>
+      <span class="signal-dot" style="left:68px;top:92px"></span>
+      <span class="signal-dot" style="left:216px;top:158px"></span>
+      <span class="signal-dot hot" style="left:375px;top:270px"></span>
+      <span class="signal-dot" style="left:105px;top:292px"></span>
+      <span class="signal-dot" style="left:300px;top:210px"></span>
+      <span class="signal-dot" style="left:215px;top:410px"></span>
+    </div>
+    <p class="title-side">What global content taught us about building agents that scale beyond borders.</p>
+    <div class="foot"><span>David Lee · CEO, Iyuno</span><span>20 Aug 2026</span></div>
+  </section>
+
+  <section class="slide warm" data-screen-label="02 Beyond borders">
+    <div class="stamp">
+      <img src="../../assets/iyuno-logo.svg" alt="Iyuno" />
+      <span>01 · The scaling problem</span>
+    </div>
+    <h2 class="headline">Models scale compute.<br/>Companies must scale <span class="accent">context.</span></h2>
+    <div class="scale-stage">
+      <div class="source-card">
+        <div class="frame" aria-hidden="true"><span class="figure-a"></span><span class="figure-b"></span></div>
+        <strong>One story.<br/>One meaning.</strong>
+      </div>
+      <div>
+        <div class="branch-map">
+          <div class="branch"><span class="n">01</span><strong>Markets</strong><span>Different cultural expectations</span></div>
+          <div class="branch"><span class="n">02</span><strong>Languages</strong><span>Different choices of tone</span></div>
+          <div class="branch"><span class="n">03</span><strong>Formats</strong><span>Different creative constraints</span></div>
+          <div class="branch"><span class="n">04</span><strong>Agents</strong><span>Different slices of evidence</span></div>
+          <div class="branch"><span class="n">05</span><strong>Teams</strong><span>Different sources of truth</span></div>
+          <div class="branch"><span class="n">06</span><strong>Moments</strong><span>The same context rebuilt again</span></div>
+        </div>
+        <p class="scale-message">At global scale, missing context becomes rework, inconsistency, latency and risk.</p>
+      </div>
+    </div>
+    <div class="foot"><span>Every border multiplies the places where meaning can be lost.</span><span>02 / 06</span></div>
+  </section>
+
+  <section class="slide" data-screen-label="03 Localization exposes the gap">
+    <div class="stamp">
+      <img src="../../assets/iyuno-logo.svg" alt="Iyuno" />
+      <span>02 · The hardest test</span>
+    </div>
+    <h2 class="headline">Localization is where context failure becomes visible.</h2>
+    <div class="context-stage">
+      <div class="line-card">
+        <p class="quote">“How are<br/>you doing?”</p>
+        <p class="question">The words are simple. The meaning is not.</p>
+      </div>
+      <div>
+        <div class="context-stack">
+          <div class="context-row"><span class="label">Speaker</span><span>Who is speaking?</span></div>
+          <div class="context-row"><span class="label">Relationship</span><span>Boss, sibling, rival, stranger?</span></div>
+          <div class="context-row"><span class="label">History</span><span>What happened three scenes ago?</span></div>
+          <div class="context-row"><span class="label">Intent</span><span>Care, threat, irony, distance?</span></div>
+        </div>
+        <p class="context-result">The model did not change. The available meaning did.</p>
+      </div>
+    </div>
+    <div class="foot"><span>Iyuno learned the context problem in production, not in a lab.</span><span>03 / 06</span></div>
+  </section>
+
+  <section class="slide dark" data-screen-label="04 CLOE product reveal">
+    <div class="stamp">
+      <img src="../../assets/iyuno-logo-white.svg" alt="Iyuno" />
+      <span>03 · The product reveal</span>
+    </div>
+    <h2 class="headline">CLOE watches once.<br/><span class="accent">Meaning persists.</span></h2>
+    <div class="cloe-stage">
+      <div class="watch-card">
+        <div class="watch-frame" aria-label="Illustrative content frame"><span class="figure-a"></span><span class="figure-b"></span></div>
+        <p class="watch-caption">WATCH ONCE</p>
+        <strong>Build shared understanding.</strong>
+      </div>
+      <div class="memory-map" aria-label="Contextual Memory Graph illustration">
+        <div class="memory-ring" aria-hidden="true"></div>
+        <div class="memory-core">Contextual<br/>Memory<br/>Graph</div>
+        <div class="memory-node a"><strong>Characters</strong><span>Identity and continuity</span></div>
+        <div class="memory-node b"><strong>Relationships</strong><span>Who matters to whom</span></div>
+        <div class="memory-node c"><strong>Story</strong><span>Progression and history</span></div>
+        <div class="memory-node d"><strong>Intent</strong><span>Emotion and purpose</span></div>
+        <div class="memory-node e"><strong>Evidence</strong><span>Visual, audio, language</span></div>
+      </div>
+    </div>
+    <div class="foot"><span>Not a longer prompt. A reusable context layer.</span><span>04 / 06</span></div>
+  </section>
+
+  <section class="slide warm" data-screen-label="05 The compounding system">
+    <div class="stamp">
+      <img src="../../assets/iyuno-logo.svg" alt="Iyuno" />
+      <span>04 · The compounding system</span>
+    </div>
+    <h2 class="headline">Capture once.<br/>Activate everywhere.</h2>
+    <div class="system-stage">
+      <div class="system-layer">
+        <span class="layer-label">General intelligence</span>
+        <h3>Google Cloud</h3>
+        <p>Models and infrastructure designed to operate at global scale.</p>
+      </div>
+      <div class="system-arrow">→</div>
+      <div class="system-layer context">
+        <span class="layer-label">Proprietary intelligence</span>
+        <h3>Iyuno context + verification</h3>
+        <p>Media-native memory, evidence, domain criteria and stewardship.</p>
+      </div>
+      <div class="system-arrow">→</div>
+      <div class="system-layer">
+        <span class="layer-label">Activation</span>
+        <div class="output-list">
+          <span>Localization</span>
+          <span>Accessibility</span>
+          <span>Quality</span>
+          <span>Discovery</span>
+          <span>Future experiences</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>Each reuse reduces the need to reconstruct meaning.</span><span>05 / 06</span></div>
+  </section>
+
+  <section class="slide amber vision-slide" data-screen-label="06 Grand vision">
+    <div class="stamp">
+      <img src="../../assets/iyuno-logo-mono.svg" alt="Iyuno" />
+      <span>05 · The grand vision</span>
+    </div>
+    <p class="eyebrow">Beyond borders</p>
+    <h2 class="display">When content carries its meaning, every market can feel native.</h2>
+    <p class="vision-line">Iyuno is building the contextual intelligence layer for the global content economy.</p>
+    <p class="vision-note">The agentic frontier is not only AI that can act. It is AI that knows enough to act with meaning.</p>
+    <div class="foot"><span>Creativity travels. Meaning stays.</span><span>06 / 06</span></div>
+  </section>
+
+</deck-stage>
+
+<script type="application/json" id="speaker-notes">[
+  "Open outside the Iyuno category. Every founder has seen model capability grow, but production still has to explain the customer, content, rules and history again and again. Name that scaling problem: the Context Gap.",
+  "At small scale, missing context looks like a bad answer. Across markets, formats, agents and teams, it becomes operating cost and trust. Models scale compute. Companies must scale proprietary context.",
+  "Iyuno encountered this in one of the hardest environments: carrying the same story across languages and cultures without losing its meaning. The deepest problem was not the words. It was reconstructing who, why and what came before.",
+  "Reveal CLOE. The demo should feel like a transformation: watch once, then reveal what the system understood. Do not tour menus. Keep the claim precise: persistent, structured, reusable context.",
+  "Position the layers as complementary. Google Cloud provides extraordinary general intelligence and global infrastructure. Iyuno adds proprietary media context, domain criteria and verification. Together they activate trusted workflows.",
+  "End on audience impact, not features. Content that carries its meaning can become native in every market. Pause after the final sentence."
+]</script>
+<script src="../../templates/deck-stage.js"></script>
+</body>
+</html>
